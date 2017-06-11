@@ -97,10 +97,12 @@
 <meta property="og:url" content="https://cookcode.science/2017/06/04/case-perfect-number/index.html">
 <meta property="og:site_name" content="Ryan Cui&#39;s Bolg">
 <meta property="og:description" content="案例分析：完美数的分类　　区分自然数：完美数、过剩数和不足数。">
-<meta property="og:updated_time" content="2017-06-05T14:18:59.214Z">
+<meta property="og:image" content="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png">
+<meta property="og:updated_time" content="2017-06-11T15:22:44.951Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Case Perfect Number">
 <meta name="twitter:description" content="案例分析：完美数的分类　　区分自然数：完美数、过剩数和不足数。">
+<meta name="twitter:image" content="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png">
 
 
 
@@ -420,6 +422,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NumberClassifier</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isFactor</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> number, <span class="keyword">final</span> <span class="keyword">int</span> potential)</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> number % potential == <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Set&lt;Integer&gt; <span class="title">getFactors</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> number)</span> </span>&#123;</div><div class="line">        Set&lt;Integer&gt; factors = <span class="keyword">new</span> HashSet&lt;&gt;();</div><div class="line">        factors.add(<span class="number">1</span>);</div><div class="line">        factors.add(number);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; number; i++) &#123;</div><div class="line">            <span class="keyword">if</span> (isFactor(number, i)) &#123;</div><div class="line">                factors.add(i);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> factors;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">aliquoSum</span><span class="params">(<span class="keyword">final</span> Collection&lt;Integer&gt; factors)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> targetNumber = Collections.max(factors);</div><div class="line">        <span class="keyword">for</span> (Integer i : factors) &#123;</div><div class="line">            sum += i;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> sum - targetNumber;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isPerfect</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> number)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> aliquoSum(getFactors(number)) == number;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isAbundant</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> number)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> aliquoSum(getFactors(number)) &gt; number;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isDeficient</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> number)</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> aliquoSum(getFactors(number)) &lt; number;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h4 id="2-函数式实现（Java8）"><a href="#2-函数式实现（Java8）" class="headerlink" title="2. 函数式实现（Java8）"></a>2. <strong>函数式实现（Java8）</strong></h4><p>　　采用Java8中的StreamAPI实现</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NumberClassifier</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IntStream <span class="title">factorsOf</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> IntStream.range(<span class="number">1</span>, number + <span class="number">1</span>)</div><div class="line">          		.filter(potential -&gt; number % potential == <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">aliquotSum</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> factorsOf(number).sum() - number;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isPerfect</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> aliquotSum(number) == number;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isAbundant</span><span class="params">(<span class="keyword">int</span> number)</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> aliquotSum(number) &gt; number;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isDeficient</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> aliquotSum(number) &lt; number;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><a rel="external" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"></a><br>本作品采用<a rel="external" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可。</p>
 
       
     </div>
@@ -471,6 +474,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/11/akka-networking-cluster-specification/" rel="prev" title="Akka-Networking Cluster Specification">
+                Akka-Networking Cluster Specification <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -567,7 +574,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -578,7 +585,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -589,7 +596,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

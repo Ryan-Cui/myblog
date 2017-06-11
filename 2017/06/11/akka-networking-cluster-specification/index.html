@@ -1,0 +1,923 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Akka," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Akka：集群规范　　Akka集群提供容错的(fault-tolerant)分散式(decentralized)基于点对点的(peer-to-peer based)集群成员服务，没有单点故障或单点瓶颈。Akka集群使用Gossip协议和自动故障检测器(automatic failure detector)。">
+<meta name="keywords" content="Akka">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Akka-Networking Cluster Specification">
+<meta property="og:url" content="https://cookcode.science/2017/06/11/akka-networking-cluster-specification/index.html">
+<meta property="og:site_name" content="Ryan Cui&#39;s Bolg">
+<meta property="og:description" content="Akka：集群规范　　Akka集群提供容错的(fault-tolerant)分散式(decentralized)基于点对点的(peer-to-peer based)集群成员服务，没有单点故障或单点瓶颈。Akka集群使用Gossip协议和自动故障检测器(automatic failure detector)。">
+<meta property="og:image" content="https://cookcode.science/images/member-states.png">
+<meta property="og:image" content="https://cookcode.science/images/member-states-weakly-up.png">
+<meta property="og:image" content="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png">
+<meta property="og:updated_time" content="2017-06-11T15:42:46.081Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Akka-Networking Cluster Specification">
+<meta name="twitter:description" content="Akka：集群规范　　Akka集群提供容错的(fault-tolerant)分散式(decentralized)基于点对点的(peer-to-peer based)集群成员服务，没有单点故障或单点瓶颈。Akka集群使用Gossip协议和自动故障检测器(automatic failure detector)。">
+<meta name="twitter:image" content="https://cookcode.science/images/member-states.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://cookcode.science/2017/06/11/akka-networking-cluster-specification/"/>
+
+
+
+
+
+  <title>Akka-Networking Cluster Specification | Ryan Cui's Bolg</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-100346322-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ryan Cui's Bolg</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://cookcode.science/2017/06/11/akka-networking-cluster-specification/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ryan Cui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ryan Cui's Bolg">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Akka-Networking Cluster Specification</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-11T00:00:00+08:00">
+                2017-06-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Akka/" itemprop="url" rel="index">
+                    <span itemprop="name">Akka</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/06/11/akka-networking-cluster-specification/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Akka：集群规范"><a href="#Akka：集群规范" class="headerlink" title="Akka：集群规范"></a>Akka：集群规范</h1><p>　　Akka集群提供容错的(fault-tolerant)分散式(decentralized)基于点对点的(peer-to-peer based)集群成员服务，没有单点故障或单点瓶颈。Akka集群使用Gossip协议和自动故障检测器(automatic failure detector)。<br><a id="more"></a></p>
+<h2 id="1-术语"><a href="#1-术语" class="headerlink" title="1. 术语"></a>1. <strong>术语</strong></h2><h3 id="1-节点-node"><a href="#1-节点-node" class="headerlink" title="1. 节点(node)"></a>1. 节点(node)</h3><p> 　　集群的逻辑成员。一台物理机上可能有多个节点。一个节点由节点标识符：[ hostname : port : uid ]定义。</p>
+<h3 id="2-集群-cluster"><a href="#2-集群-cluster" class="headerlink" title="2. 集群(cluster)"></a>2. 集群(cluster)</h3><p>　　通过成员服务(membership service)连接在一起的一组节点。    </p>
+<h3 id="3-领导-Leader"><a href="#3-领导-Leader" class="headerlink" title="3. 领导(Leader)"></a>3. 领导(Leader)</h3><p>　　集群中的单个节点充当领导者。管理集群收敛和成员状态转换。</p>
+<h2 id="2-成员-Membership"><a href="#2-成员-Membership" class="headerlink" title="2. 成员(Membership)"></a>2. <strong>成员(Membership)</strong></h2><p>　　集群由一组成员节点组成。每个节点的标识符是一个[ hostname : port : uid ]元组。一个Akka应用程序可以分布在一个集群上，每个节点都承载了应用程序的某些部分。集群成员和运行在该应用程序节点上的Actor是不挂钩的(decoupled)。一个不托管任何Actor节点也可以是集群的成员。可以通过向集群中的一个节点发出JOIN命令来加入集群。</p>
+<p>　　节点标识符内部还包含唯一标识该Actor系统实例的UID [ hostname : port ]。Akka使用UID能够可靠的触发远程死亡监视(remote death watch)。这意味着相同的Actor系统一旦从集群中删除，就不能再次加入集群。要将一个具有相同[ hostname : port ]的Actor系统重新加入到集群中，必须先停止Actor系统并启动一个新的具有相同 [ hostname : port ] 的Actor系统，然后它接收一个不同的UID。</p>
+<p>　　集群成员状态是专门的<a href="http://hal.upmc.fr/docs/00/55/55/88/PDF/techreport.pdf" target="_blank" rel="external">CRDT</a>，这意味着它具有单独合并功能。当不同节点发生并发更改时，更新可以始终被合并并收敛到相同的最终结果。</p>
+<h2 id="3-Gossip"><a href="#3-Gossip" class="headerlink" title="3. Gossip"></a>3. <strong>Gossip</strong></h2><p>　　Akka的集群基于Amazon的<a href="http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf" target="_blank" rel="external">Dynamo</a>系统，特别是Basho的<a href="http://basho.com/technology/architecture/" target="_blank" rel="external">Riak</a>分布式数据库中采用的方法。集群成员使用<a href="http://en.wikipedia.org/wiki/Gossip_protocol" target="_blank" rel="external">Gossip协议</a>进行沟通交流，其中集群的当前状态通过闲话(gossiped)随机的在集群中散布，优先散布到没有接收到集群最新版本的成员。</p>
+<h3 id="1-向量时钟-Vector-Clocks"><a href="#1-向量时钟-Vector-Clocks" class="headerlink" title="1.向量时钟(Vector Clocks)"></a>1.<strong>向量时钟(</strong>Vector Clocks<strong>)</strong></h3><p>　　<a href="http://en.wikipedia.org/wiki/Vector_clock" target="_blank" rel="external">向量时钟</a>是一种用于在分布式系统中生成事件的部分排序并检测因果关系违规的数据结构和算法。</p>
+<p>　　我们使用向量时钟来协调和合并在八卦期间的集群状态差异。向量时钟是一组(node, counter)。对集群状态的每次更新都会伴随向量时钟的更新。</p>
+<h3 id="2-收敛-Gossip-Convergence"><a href="#2-收敛-Gossip-Convergence" class="headerlink" title="2.收敛(Gossip Convergence)"></a>2.收敛(Gossip Convergence)</h3><p>　　有关集群的信息在某个时间点在本地节点收敛。这是当一个节点可以证明他正在观察的集群状态已经被集群中的所有其他节点观察到。通过传递在八卦期间看到当前状态版本的一组节点来实现收敛，这个信息被称为在八卦概述中看到的集合。当所有节点都包含在所看到的集合中，则会收敛。</p>
+<p>　　当有任何节点变为不可达状态时(unreachable)，不能发送收敛。节点需要重新变为可达状态(reachable)，或移动到down和remove状态（参见下面的Membership Lifecycle部分）。这只会组织Leader执行其集群成员管理，并不会影响在集群上运行的应用程序。例如，这意味着在网络分区期间，无法向集群添加更多节点。节点可以加入(join)，但是在分区已经愈合或者不可达接待你已被关闭之前，新加入的节点不会被移动为up状态。</p>
+<h3 id="3-故障检测器-Failure-Detector"><a href="#3-故障检测器-Failure-Detector" class="headerlink" title="3.故障检测器(Failure Detector)"></a>3.故障检测器(Failure Detector)</h3><p>　　故障检测器负责检测节点是否与集群其余部分不可达(unreachable)。为此，我们正在使用Hayashibara等人的“Phi应计失效检测器”<a href="http://www.jaist.ac.jp/~defago/files/pdf/IS_RR_2004_010.pdf" target="_blank" rel="external">The Phi Accrual Failure Detector</a> 的实现。</p>
+<p>　　应计失效检测器解耦监测和解释。这使得它们适用于更广泛的场景，并且更适合构建通用故障检测服务。这个想法是保持故障统计历史，从其他节点收到的心跳计算出来，并尝试通过考虑多个因素进行有针对性的猜测，以及如何随着时间的推移积累，以便提出更好的猜测一个特定的节点的状态是up还是down。</p>
+<p>　　通过询问节点是否关闭(is the node down?)，而不仅是回答“是”或“否”。它返回一个表示节点关闭的可能性的phi值。</p>
+<p>　　作为计算基础的阈(yù)值(threshold )可由用户配置。低阈值容易产生许多错误的怀疑，但确保在发生真实崩溃的情况下进行快速检测。相反，高阈值会产生较少的错误，但需要更多时间来检测实际的崩溃。 默认阈值为8，适用于大多数情况。然而，在云环境（如Amazon EC2）中，该值可以增加到12，以便解决有时在这些平台上发生的网络问题。</p>
+<p>　　在一个群集中，每个节点由几个其他节点进行监视（默认最大5个），当任何一个节点检测到节点不可达时，信息将通过八卦扩展到群集的其余部分。换句话说，只要有一个节点标记一个节点不可达，其余的集群便会标记该节点不可达。</p>
+<p>　　要监视的节点从散列有序节点环中的邻居中选出。 这是为了增加对框架(racks)和数据中心进行监控的可能性，但所有节点上的顺序是相同的，这确保了全面的覆盖。</p>
+<p>　　心跳每隔一秒发出一次，每次心跳都会在用作故障检测器的输入的回复请求/回复握手中执行。</p>
+<p>　　故障检测器还将检测节点是否再次可达。 当监听不可达节点的所有节点将其再次检测到可以再次到达时，在八卦传播后，集群将认为它是可达到的。</p>
+<p>　　如果无法将系统消息传递到节点，则会将其隔离，并无法从不可访问的状态恢复。 如果存在太多未确认的系统消息（例如监视，终止，远程Actor部署，由远程父节点监督的Actor的失败），则可能发生这种情况。 然后，节点需要移动到down或remove状态（参见下面的Membership Lifecycle部分），并且必须重新启动 Actor系统才能再次加入群集。</p>
+<h3 id="4-Leader"><a href="#4-Leader" class="headerlink" title="4.Leader"></a>4.Leader</h3><p>　　在八卦收敛后，可以确定集群的领导者。没有领导者的选举过程，无论何时有八卦收敛，任何一个节点都可以确定地认出领导者。领导者只是一个角色，任何一个节点都可以成为领导者，它可以在收敛轮次之间改变。领导者只是排序顺序的第一个能够发挥领导作用的节点，领导者的首选成员状态为up和leaving（有关成员状态的更多信息，请参阅下面的Membership Lifecycle部分）。</p>
+<p>　　领导者的作用是管理成员加入或退出集群，将加入(joining)的成员转变为up状态或将推出(exiting)的成员转变为removed状态。目前领导者的行为只能通过接收具有八卦收敛的新的群集状态来触发。</p>
+<p>　　如果配置好，领导者也有权力将“根据故障检测器被认为是不可达”的节点“自动关闭”。</p>
+<h3 id="5-种子节点-Seed-Nodes"><a href="#5-种子节点-Seed-Nodes" class="headerlink" title="5.种子节点(Seed Nodes)"></a>5.种子节点(Seed Nodes)</h3><p>　　种子节点被配置为加入群集的新节点的接触点。当新节点启动时，它会向所有种子节点发送一条消息，然后发送一个join命令到首先应答的种子节点。</p>
+<p>　　种子节点配置值对运行的集群本身没有任何影响，它只与加入集群的新节点有关，因为它可以帮助他们找到联系点来发送join命令；新成员可以将此命令发送到集群中的任何当前成员，而不仅仅是到种子节点。</p>
+<h3 id="6-八卦协议-Gossip-Protocol"><a href="#6-八卦协议-Gossip-Protocol" class="headerlink" title="6.八卦协议(Gossip Protocol)"></a>6.八卦协议(Gossip Protocol)</h3><p>　　推挽(push-pull)八卦的变化是用来减少围绕群集发送的八卦信息的数量。在推挽八卦中，发送摘要代表当前版本，但不是实际值; 八卦的收件人可以发回任何具有较新版本的值，并且还请求具有过时版本的值。Akka使用单个共享状态与向量时钟进行版本控制，因此在Akka中使用的推挽八卦变体使用此版本：只需按需要推送实际状态。</p>
+<p>　　定期地，默认值是每1秒一次，每个节点选择另一个随机节点来发起一轮八卦。如果不到一半的节点驻留在所看到的集合中（已经看到新的状态），那么该集群会闲话3次而不是每秒一次。这种调整后的八卦间隔是在状态改变之后的早期传播阶段加快收敛过程的一种方式。</p>
+<p>　　对要八卦的节点的选择是随机的，但它偏向于可能没有看到当前状态版本的节点。在没有收敛的每轮八卦交换中，它使用0.8（可配置）的概率来传播到不是所看到的集合的一部分的节点，即可能具有较旧版本的状态的节点。否则八卦到任何随机的live节点。</p>
+<p>　　这种有偏心的选择是在状态改变后的后期传播阶段，加快收敛过程的一种方式。</p>
+<p>　　对于大于400个节点（可配置，并通过经验证据表明）的集群，0.8概率逐渐减小，以避免具有太多并发八卦请求的压倒单个信息落后的节点。八卦接收器还有一种机制，通过删除已经在邮箱中排队太长时间的消息来保护自己免受太多并发的八卦消息。</p>
+<p>　　当集群处于收敛状态时，gossiper只发送一个包含八卦版本的八卦状态消息到选定的节点。一旦集群发生变化（意味着非收敛），那么它再次回到偏心的八卦。</p>
+<p>　　八卦状态或八卦状态的接收者可以使用八卦版本（向量时钟）(gossip version (vector clock) )来确定：</p>
+<ol>
+<li>它有一个较新版本的八卦状态，在这种情况下，它将较新版本的八卦状态发送回到gossiper。</li>
+<li>它有一个过时的状态版本，在这种情况下，收件人通过发回其八卦状态的版本来请求来自gossiper的当前状态。</li>
+<li>它具有冲突的八卦版本，在这种情况下，不同的版本被合并并发回。</li>
+</ol>
+<p>　　如果收件人和八卦具有相同的版本，则不会发送或请求八卦状态。</p>
+<p>　　八卦的周期性有一个很好的状态变化的批处理。例如，将多个节点快速连接到一个节点将导致只有一个状态改变被传播到集群中的其他成员。</p>
+<p>　　八卦消息通过protobuf进行序列化，并且gzip压缩以减少有效负载大小。</p>
+<h2 id="4-成员声明周期-Membership-Lifecycle"><a href="#4-成员声明周期-Membership-Lifecycle" class="headerlink" title="4.成员声明周期(Membership Lifecycle)"></a>4.成员声明周期(Membership Lifecycle)</h2><p>　　节点从joining状态开始。 一旦所有节点都看到新节点正在加入（通过八卦收敛），Leader将会将成员状态设置为up。</p>
+<p>　　如果节点以安全，预期的方式离开集群，则它切换到leaving状态。一旦Leader看leaving状态的节点上的收敛，Leader将会将其移动到exiting状态。 一旦所有节点都看到了exiting状态（收敛），则Leader将从集群中删除节点，将其标记为removed。</p>
+<p>　　如果节点不可达(unreachable )，则八卦是不可能收敛的，因此任何Leader的行为(actions)也是不可能的（例如，允许节点成为集群的一部分）。为了能够前进发展，必须改变不可达节点的状态。不可达的节点必须再次可达(reachable )或标记为down。如果该节点要再次加入群集，则必须重新启动该actor系统并再次通过加入进程(joining process)。集群可以通过Leader在配置的不可达性时间超时后自动关闭节点。如果不可达节点的新化身试图重新加入集群，在集群中的旧的化身将被标记为关闭，新的化身可以重新加入集群而无需手动干预。</p>
+<blockquote>
+<p>注意：</p>
+<p>​    如果启用了自动关闭功能、触发了故障检测器，并且您没有采取措施关闭已经无法访问的节点，则最终会导致出现许多单个节点的群集。 这是因为无法访问的节点可能会看到其余的集群无法访问，则成为自己的Leader并形成自己的集群。</p>
+</blockquote>
+<p>　　如前所述，如果节点不可达，则八卦是不可能收敛的，因此任何Leader的行为也是不可能的。通过启用akka.cluster.allow-weakly-up-member（默认启用），可以在尚未达到收敛的同时促进新节点的加入。这些新连接的节点将被提升为WeaklyUp状态。 一旦达到八卦收敛Leader将WeaklyUp状态的成员移至Up。</p>
+<p>　　请注意，网络分区另一侧的成员对新成员是否存在并不了解。 例如，您不应该在做群体决策的时候统计WeaklyUp状态的成员数量。</p>
+<h3 id="1-成员状态-Member-States"><a href="#1-成员状态-Member-States" class="headerlink" title="1.成员状态(Member States)"></a>1.成员状态(Member States)</h3><ul>
+<li><strong>joining</strong> - 加入群集时的瞬时状态</li>
+<li><strong>weakly up</strong> -  网络拆分(network split)时的瞬时状态（只有当`akka.cluster.allow-weakly-up-members=on）</li>
+<li><strong>up</strong> - 正常运行状态</li>
+<li><strong>leaving</strong> / <strong>exiting</strong> - 优雅的删除过程中的状态</li>
+<li><strong>down</strong> - 标记为 down (不再是集群决策的一部分)</li>
+<li><strong>removed</strong> - 墓碑状态（不再是集群成员）</li>
+</ul>
+<h3 id="2-用户行为-User-Actions"><a href="#2-用户行为-User-Actions" class="headerlink" title="2.用户行为(User Actions)"></a>2.用户行为(User Actions)</h3><ul>
+<li><strong>join</strong> - 将单个节点连接到集群 - 如果在配置中指定了要加入的节点，则可以显式或自动启动</li>
+<li><strong>leave</strong> - 告诉节点优雅的离开集群</li>
+<li><strong>down</strong> - 标识一个节点为down</li>
+</ul>
+<h3 id="3-领导者行为-Leader-Actions"><a href="#3-领导者行为-Leader-Actions" class="headerlink" title="3.领导者行为(Leader Actions)"></a>3.领导者行为(Leader Actions)</h3><p>​    集群Leader有以下职责：</p>
+<ul>
+<li>将成员加入和移出群集<ul>
+<li>joining  –&gt;  up</li>
+<li>exiting  –&gt;  removed</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-故障检测和不可达性-Failure-Detection-and-Unreachability"><a href="#4-故障检测和不可达性-Failure-Detection-and-Unreachability" class="headerlink" title="4.故障检测和不可达性(Failure Detection and Unreachability)"></a>4.故障检测和不可达性(Failure Detection and Unreachability)</h3><ul>
+<li><strong>fd</strong> * - 其中一个监控节点的故障检测器已经触发，导致被监视节点被标记为不可达</li>
+</ul>
+<ul>
+<li><strong>unreachable</strong> * - 不可达不是一个真正的成员状态，而是一个标志。该状态信号表明该集群无法与该节点通信。在不可达之后，故障检测器可能会检测到其再次可达，从而删除该标志。</li>
+</ul>
+<h3 id="5-成员状态图（akka-cluster-allow-weakly-up-members-off）"><a href="#5-成员状态图（akka-cluster-allow-weakly-up-members-off）" class="headerlink" title="5.成员状态图（akka.cluster.allow-weakly-up-members = off）"></a>5.成员状态图（akka.cluster.allow-weakly-up-members = off）</h3><p><img src="/images/member-states.png" alt="member-states.png"></p>
+<h3 id="6-成员状态图-akka-cluster-allow-weakly-up-members-on"><a href="#6-成员状态图-akka-cluster-allow-weakly-up-members-on" class="headerlink" title="6.成员状态图 (akka.cluster.allow-weakly-up-members=on)"></a>6.成员状态图 (akka.cluster.allow-weakly-up-members=on)</h3><p><img src="/images/member-states-weakly-up.png" alt="member-states-weakly-up.png"></p>
+<p><a rel="external" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"></a><br>本作品采用<a rel="external" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Akka/" rel="tag"># Akka</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/04/case-perfect-number/" rel="next" title="Case Perfect Number">
+                <i class="fa fa-chevron-left"></i> Case Perfect Number
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Ryan Cui" />
+          <p class="site-author-name" itemprop="name">Ryan Cui</p>
+           
+              <p class="site-description motion-element" itemprop="description">Cooking Code Cooking Life</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Ryan-Cui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/CookCode" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Akka：集群规范"><span class="nav-number">1.</span> <span class="nav-text">Akka：集群规范</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-术语"><span class="nav-number">1.1.</span> <span class="nav-text">1. 术语</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-节点-node"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. 节点(node)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-集群-cluster"><span class="nav-number">1.1.2.</span> <span class="nav-text">2. 集群(cluster)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-领导-Leader"><span class="nav-number">1.1.3.</span> <span class="nav-text">3. 领导(Leader)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-成员-Membership"><span class="nav-number">1.2.</span> <span class="nav-text">2. 成员(Membership)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Gossip"><span class="nav-number">1.3.</span> <span class="nav-text">3. Gossip</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-向量时钟-Vector-Clocks"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.向量时钟(Vector Clocks)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-收敛-Gossip-Convergence"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.收敛(Gossip Convergence)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-故障检测器-Failure-Detector"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.故障检测器(Failure Detector)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Leader"><span class="nav-number">1.3.4.</span> <span class="nav-text">4.Leader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-种子节点-Seed-Nodes"><span class="nav-number">1.3.5.</span> <span class="nav-text">5.种子节点(Seed Nodes)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-八卦协议-Gossip-Protocol"><span class="nav-number">1.3.6.</span> <span class="nav-text">6.八卦协议(Gossip Protocol)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-成员声明周期-Membership-Lifecycle"><span class="nav-number">1.4.</span> <span class="nav-text">4.成员声明周期(Membership Lifecycle)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-成员状态-Member-States"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.成员状态(Member States)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-用户行为-User-Actions"><span class="nav-number">1.4.2.</span> <span class="nav-text">2.用户行为(User Actions)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-领导者行为-Leader-Actions"><span class="nav-number">1.4.3.</span> <span class="nav-text">3.领导者行为(Leader Actions)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-故障检测和不可达性-Failure-Detection-and-Unreachability"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.故障检测和不可达性(Failure Detection and Unreachability)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-成员状态图（akka-cluster-allow-weakly-up-members-off）"><span class="nav-number">1.4.5.</span> <span class="nav-text">5.成员状态图（akka.cluster.allow-weakly-up-members = off）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-成员状态图-akka-cluster-allow-weakly-up-members-on"><span class="nav-number">1.4.6.</span> <span class="nav-text">6.成员状态图 (akka.cluster.allow-weakly-up-members=on)</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ryan Cui</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "2a9c2176f19445cdbf9a4af911c9e6ea",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
