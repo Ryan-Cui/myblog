@@ -1,0 +1,972 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Akka," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Akka：Introduction to AkkaAkka及Actor Model介绍。">
+<meta name="keywords" content="Akka">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Introduction to Akka">
+<meta property="og:url" content="https://cookcode.science/2017/06/25/akka-Introduction/index.html">
+<meta property="og:site_name" content="Ryan Cui&#39;s Bolg">
+<meta property="og:description" content="Akka：Introduction to AkkaAkka及Actor Model介绍。">
+<meta property="og:image" content="https://cookcode.science/images/Introduction-to-Akka1.png">
+<meta property="og:image" content="https://cookcode.science/images/Introduction-to-Akka2.png">
+<meta property="og:image" content="https://cookcode.science/images/Introduction-to-Akka3.png">
+<meta property="og:image" content="https://cookcode.science/images/Introduction-to-Akka4.png">
+<meta property="og:image" content="https://cookcode.science/images/Introduction-to-Akka5.png">
+<meta property="og:image" content="https://cookcode.science/images/Introduction-to-Akka6.png">
+<meta property="og:image" content="https://cookcode.science/images/Introduction-to-Akka7.png">
+<meta property="og:image" content="https://cookcode.science/images/Introduction-to-Akka8.png">
+<meta property="og:image" content="https://cookcode.science/images/Introduction-to-Akka9.png">
+<meta property="og:image" content="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png">
+<meta property="og:updated_time" content="2017-06-24T16:58:10.675Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Introduction to Akka">
+<meta name="twitter:description" content="Akka：Introduction to AkkaAkka及Actor Model介绍。">
+<meta name="twitter:image" content="https://cookcode.science/images/Introduction-to-Akka1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://cookcode.science/2017/06/25/akka-Introduction/"/>
+
+
+
+
+
+  <title>Introduction to Akka | Ryan Cui's Bolg</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-100346322-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ryan Cui's Bolg</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://cookcode.science/2017/06/25/akka-Introduction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ryan Cui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ryan Cui's Bolg">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Introduction to Akka</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-25T00:00:00+08:00">
+                2017-06-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Akka/" itemprop="url" rel="index">
+                    <span itemprop="name">Akka</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/06/25/akka-Introduction/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Akka：Introduction-to-Akka"><a href="#Akka：Introduction-to-Akka" class="headerlink" title="Akka：Introduction to Akka"></a>Akka：Introduction to Akka</h1><p>Akka及Actor Model介绍。<br>  <a id="more"></a></p>
+<h2 id="1-Akka简介"><a href="#1-Akka简介" class="headerlink" title="1. Akka简介"></a>1. <strong>Akka简介</strong></h2><p>​    Akka，一组用于设计跨越处理器核心和网络的可扩展、有弹性的系统的开源库。Akka允许您专注于满足业务需求，而不是编写底层代码来保证可靠的行为、容错和高性能。</p>
+<p>​    通用的实践和编程模型并没有解决对于现代计算机结构而设计系统的固有挑战。分布式系统必须要应对因环境组件崩溃导致无法响应、消息丢失且没有在线路上留下痕迹，网络延迟波动等一系列问题。这些问题在精心管理的数据中心内环境中经常出现 - 在虚拟架构中更是如此。</p>
+<p>​    为了应对这些现实，Akka提供：</p>
+<ul>
+<li>多线程行为，不使用低级并发结构，如atomics 或 locks。甚至不需要考虑内存可见性问题。</li>
+<li>系统及其组件之间的透明远程通信。不需要编写或维护困难的网络通讯代码。</li>
+<li>一个有弹性的集群，高可用架构，按需扩展或缩小。</li>
+</ul>
+<p>​    所有这些功能都可以通过统一的编程模型获得：Akka利用了Actor模型来提供一个抽象模型，使得更容易编写正确的并发、并行和分布式的系统。Actor模型贯穿整个Akka库，提供了一致的理解和使用方式。因此，Akka高度集成，您无法通过选择库来解决个别问题并尝试将它们拼凑在一起。</p>
+<p>​    通过学习Akka及其Actor模型，您可以得到一整套广泛而深入的工具，解决困难的分布式/并行系统问题。</p>
+<h2 id="2-什么是Actor模型"><a href="#2-什么是Actor模型" class="headerlink" title="2. 什么是Actor模型"></a>2. <strong>什么是Actor模型</strong></h2><p>  　　当今计算环境的特点与以往编程模式的构思有很大不同。Actor几十年前被 <a href="https://en.wikipedia.org/wiki/Carl_Hewitt#Actor_model" target="_blank" rel="external">Carl Hewitt</a>发明。但是最近，它们对现代计算机系统的挑战的适用性已得到承认并被证明是有效的。</p>
+<p>​    Actor模型提供了一种抽象，可以让您在交流层面考虑您的代码，与大型组织中的人相同。Actor的基本特征是，他们将世界建模成通过明确的消息传递来相互交流的有状态实体。</p>
+<p>作为计算实体，Actor具有以下特征：</p>
+<ul>
+<li>它们通过消息通信异步执行，而不是方法调用。</li>
+<li>它们管理自己的状态。</li>
+<li>响应消息时，他们可以：<ul>
+<li>创建其他（子）Actor</li>
+<li>发送消息给其他Actor</li>
+<li>停止（子）Actor或自己</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-Actor-模型解决什么问题？"><a href="#3-Actor-模型解决什么问题？" class="headerlink" title="3. Actor 模型解决什么问题？"></a>3. <strong>Actor 模型解决什么问题？</strong></h2><p>  　　Akka使用Actor模型来克服传统面向对象编程模型的局限性，并满足高分布式系统的独特挑战。为了充分了解Actor模型的必要性，它有助于识别传统的编程方法与并发、分布式计算的现实的不匹配。</p>
+<h3 id="1-封装的错误认识"><a href="#1-封装的错误认识" class="headerlink" title="1. 封装的错误认识"></a>1. 封装的错误认识</h3><p>​    面向对象编程（OOP）是一个广泛接受的编程模型。其核心思想之一就是<strong><em>封装</em></strong>。封装规定对象的内部数据不能直接从外部访问; 它只能通过调用一组辅助方法来修改。该对象负责暴露安全操作，以保护其封装数据的不变性。</p>
+<p>​    例如，对有序二叉树实现的操作不能改变树的次序。调用者期望排序是完整的，并且当查询树的某一数据时，他们需要能够依赖这个约束。</p>
+<p>​    当我们分析OOP运行行为时，我们有时会绘制一个显示方法调用交互的消息序列图。例如：</p>
+<p><img src="/images/Introduction-to-Akka1.png" alt="序列图"></p>
+<p>​    不幸的是，上述图表并不能准确地表示<strong><em>实例</em></strong>在执行过程中的生命线。实际上，<strong><em>线程</em></strong>执行所有这样的调用，并且变量的执行发生在调用该方法的同一线程上。通过执行线程更新上图，看起来像这样：</p>
+<p><img src="/images/Introduction-to-Akka2.png" alt="线程序列图"></p>
+<p>​    当您尝试对<strong><em>多线程</em></strong>发生的情况进行建模时，我们整齐绘制的图形变得勉强。我们可以尝试说明访问同一个实例的多个线程：</p>
+<p>​    <img src="/images/Introduction-to-Akka3.png" alt="线程交互的序列图"></p>
+<p>​    有一个执行部分，两个线程调用相同的方法。不幸的是，对象的封装模型并不能保证该部分发生什么。若在两个线程之间不进行任何的协调，两个调用的指令可以以任意方式进行交织，则无法保证封装数据的不变性。现在，这个问题由于许多线程的存在而加剧。</p>
+<p>.    解决这个问题的常见方式是在这些方法上添加一个锁。虽然这样确保了在任何给定时间最多只有一个线程将调用该方法，但这是一个非常昂贵的策略：</p>
+<ul>
+<li>锁 – <em>严重限制</em>并发，它们在现代CPU架构上非常昂贵，需要操作系统挂起线程并稍后恢复。</li>
+<li>调用者线程正在被阻塞，所以它不能做任何其他有意义的工作。即使在桌面应用程序中，这也是不可接受的，我们希望使用户面对的部分应用程序（其UI），即使在长时间的后台作业运行时也能够响应。在后端，阻塞是完全浪费的。人们可能认为这可以通过启动新线程来补偿，但是线程也是一种昂贵的抽象。</li>
+<li>锁定引入了新的威胁：死锁。</li>
+</ul>
+<p>这些现实导致了两败俱伤的局面：</p>
+<ul>
+<li>没有足够的锁，状态就会被破坏。</li>
+<li>一个地方有许多锁定，性能受损，很容易导致死锁。</li>
+</ul>
+<p>​    另外，锁只在本地工作良好。当涉及跨多台机器的协调时，唯一的选择是分布式锁。不幸的是，分布式锁的比本地锁效率低几个数量级，且通常会对扩展进行硬性限制。分布式锁协议需要在多台机器上通过网络进行多次往返通信，因此延迟突破天际。</p>
+<p>​    在面向对象语言中，我们很少会考虑线程或线性执行路径。我们经常将系统设想为对象实例网络，对方法调用做出反应，修改其内部状态，然后通过驱动整个应用程序状态的方法调用相互通信：</p>
+<p><img src="/images/Introduction-to-Akka4.png" alt="互动对象网络"></p>
+<p>​    然而，在多线程分布式环境中，实际发生的是线程通过以下方法的调用，去“遍历”此对象实例网络。因此，线程是真正的驱动执行：</p>
+<p><img src="/images/Introduction-to-Akka5.png" alt="由线程遍历的交互式对象的网络"></p>
+<p><strong>总结</strong>：</p>
+<ul>
+<li><strong>对象只能保证面对单线程访问的封装（不变量的保护），多线程执行几乎总是导致内部状态损坏。在同一个代码段中有两个竞争的线程，则无法保证数据的不变性。</strong></li>
+<li><strong>虽然锁似乎是维护多线程封装的自然补救措施，但实际上它们效率低下，容易导致任何现实应用中的死锁。</strong></li>
+<li><strong>锁在本地工作，分布式环境下很难拓展。</strong></li>
+</ul>
+<h3 id="2-共享内存在现代计算机架构上的错误认识"><a href="#2-共享内存在现代计算机架构上的错误认识" class="headerlink" title="2. 共享内存在现代计算机架构上的错误认识"></a>2. 共享内存在现代计算机架构上的错误认识</h3><p>​    80年代至90年代的编程模型的概念中，写入变量意味着直接写入存储单元（这有点混淆了局部变量可能只存在于寄存器中）。在现代架构上 - 如果我们简化了一些事情 - CPU正在写入缓存（<a href="https://en.wikipedia.org/wiki/CPU_cache" target="_blank" rel="external">cache lines</a>），而不是直接写入内存。这些高速缓存大多数是CPU核心的本地存储，也就是说，一个核心的储存写入不可见。为了使本地更改对另一个核心可见，以致对另一个线程可见，高速缓存行需要发送到另一个核心的缓存。</p>
+<p>​    在JVM上，我们必须通过使用<em>volatile</em>标记或Atomic包装来明确地表示要跨线程共享的内存位置。否则，我们只能在锁定的部分访问它们。为什么我们不把所有变量标记为volatile？因为跨内核运输缓存是一项非常昂贵的操作！这样做会隐含地阻止所涉及的内核进行额外的工作，并导致cache coherence protocol（CPU在主内存和其他CPU传输缓存）的瓶颈。结果是运行速度大幅度降低。</p>
+<p>​    即使开发人员意识到这种情况，弄清楚哪些内存位置应该被标记为volatile，还是使用哪种Atomic结构是一种黑暗的艺术。</p>
+<p><strong>总结</strong>：</p>
+<ul>
+<li><strong>没有真正的共享内存，CPU核心就像网络上的计算机一样，将数据块（cache lines）明确地传递给彼此。CPU间通信和网络通信有许多共同点。现在通过CPU或网络计算机传递消息是有规范的。</strong></li>
+<li><strong>更加规范和有原则的方法是将状态保留在并发实体中，并通过消息明确地在并发实体之间传播数据或事件，而不是通过变量标记为共享或使用atomic数据结构来代替/隐藏消息传递。</strong></li>
+</ul>
+<h3 id="3-调用堆栈的错误认识"><a href="#3-调用堆栈的错误认识" class="headerlink" title="3. 调用堆栈的错误认识"></a>3. 调用堆栈的错误认识</h3><p>​    今天，我们经常把调用堆栈当作理所应当的。但是，它们是在并发编程并不重要的时代发明的，因为多CPU系统并不常见。调用堆栈不会跨线程，因此不要对异步调用链建模。</p>
+<p>​    当线程打算将任务委派给“background”时，会出现问题。实际上，这意味着委托给另一个线程。这不能成为一个简单的方法/函数调用，因为调用是线程严格在本地执行的。通常发生的情况是，“Caller“将一个对象放入由工作线程（“Cllee”）共享的存储单元，这个存储单元在一些事件循环中被选中。这允许“Caller”线程去执行其他任务。</p>
+<p>​    第一个问题是，如何通知“Caller”完成任务？但是当一个任务失败并出现异常时，会出现一个更严重的问题。异常传播到哪里？它将传播到工作线程的异常处理程序，完全忽略了实际的“Caller”是谁：</p>
+<p><img src="/images/Introduction-to-Akka6.png" alt="异常不能在不同的线程之间传播"></p>
+<p>​    这是一个严重的问题。工作线程如何处理这种情况？它可能无法解决问题，因为它通常会忽略失败的任务的目的。“Caller”线程需要以某种方式被通知，但是没有调用堆栈来解除异常。故障通知只能通过侧面通道进行，例如将错误代码放在“Caller”线程，要不就在预期结果准备好之后。如果此通知不到位，则“Caller”不会收到失败的通知，并且任务丢失！<strong>类似于网络系统如何工作，消息/请求可以丢失/失败，没有任何通知。</strong></p>
+<p>​    错误真的发生时，这种不好的情况会变得更糟，一个由线程支持的worker遇到一个错误，最终会导致一个不可恢复的情况。例如，由bug引起的内部异常会冒泡到线程的root，并使线程关闭。这就出现了一个问题，谁应该重新启动线程主持的服务的正常运行，如何恢复到已知状态？乍一看，这似乎是可以管理的，但我们突然面临着一个新的，意想不到的现象：线程当前正在工作的实际任务不在共享内存位置，而是从任务中取出（通常是一个队列）。事实上，由于异常到达顶部，丢弃所有的调用堆栈，任务状态完全丢失了！</p>
+<p><strong>综上所述：</strong></p>
+<ul>
+<li><strong>在当前系统上实现有意义的并发和性能，线程必须以有效的方式相互委派任务，而不会阻塞。使用这种风格的任务委托并发（更多的是通过网络/分布式计算），调用基于堆栈的错误处理分解，需要引入新的显式错误信号机制。</strong></li>
+<li><strong>具有工作代表权的并行系统需要处理服务故障，并具有从其中恢复的原则性手段。这些服务的客户需要注意在重新启动过程中任务/消息可能会丢失。即使没有发生损失，由于先前入队的任务（长队列），垃圾收集等引起的延迟等等，响应可能会任意延迟。面对这些，并发系统应该以超时的形式处理响应超时，就像网络/分布式系统。</strong></li>
+</ul>
+<h2 id="4-Actor模式如何满足并发、分布式系统的需求"><a href="#4-Actor模式如何满足并发、分布式系统的需求" class="headerlink" title="4.Actor模式如何满足并发、分布式系统的需求"></a>4.Actor模式如何满足并发、分布式系统的需求</h2><p>​    如上述，常见的编程实践无法适应现代并发和分布式系统的需求。幸运的是，我们不需要废除我们所知道的一切。Actor模式以原则性的方式解决了这些缺点，从而使得系统的行为能够更好地匹配我们的心理模型。</p>
+<p>特别的，我们想要去：</p>
+<ul>
+<li>强制执行封装，而无需使用锁。</li>
+<li>使用协作实体反应信号模型，改变状态和发送信号，推动整个应用的发展。</li>
+<li>不要担心执行机制与我们的世界观不匹配。</li>
+</ul>
+<p>以下主题描述Actor模式如何完成了这些目标。</p>
+<h3 id="1-使用消息的传递，避免了锁和阻塞"><a href="#1-使用消息的传递，避免了锁和阻塞" class="headerlink" title="1.使用消息的传递，避免了锁和阻塞"></a>1.使用消息的传递，避免了锁和阻塞</h3><p>​    演员发送消息到彼此，而不是调用方法。发送消息不会将执行线程从发送方传送到目的地。一个Actor可以发送一个消息并继续工作，而不阻塞。因此，它可以做更多的工作，发送和接收消息。</p>
+<p>​    对于对象，当一个方法返回时，它释放对其执行线程的控制。在这方面，Actor表现得很像对象，它们对消息做出反应，并在处理当前消息时返回执行。以这种方式，Actor实际上实现了我们想象的对象的执行：</p>
+<p><img src="/images/Introduction-to-Akka7.png" alt="演员通过发送消息互相交互"></p>
+<p>​    传递消息而不是调用方法的一个重要区别是消息没有返回值。通过发送消息，Actor将工作委托给另一个Actor。正如我们在《调用堆栈的错误认识》中看到的：如果它想要一个返回值，发送执行者将需要在同一个线程上阻止或执行其他Actor的工作。相反，接收者Actor将结果通过回复消息的方式进行传递。</p>
+<p>​    我们在模型中需要的第二个关键变化是恢复封装。Actor对消息做出反应，就像对象对它们调用的方法“反应”一样。Actor独立于消息的发送者执行，并且它们一次一个地响应传入的消息；而不是多个线程“延伸”到我们的Actor中，并对内部状态和不变量造成破坏。当每个Actor按顺序处理发送给它的消息时，不同的Actor彼此并发工作，所以一个Actor系统可以同时处理多个消息，同时机器上可以使用许多处理器核心。由于每个Actor总是至多处理一个消息，所以一个Actor的变量可以保持不同步。这不会自动使用锁：</p>
+<p><img src="/images/Introduction-to-Akka8.png" alt="消息在顺序处理时不会使不变量无效"></p>
+<p>总而言之，当Actor收到消息时，会发生什么：</p>
+<ol>
+<li>Actor将消息添加到队列的末尾。</li>
+<li>如果Actor没有被安排执行，它被标记为准备执行。</li>
+<li>一个（隐藏的）调度器实体接管Actor并开始执行它。</li>
+<li>Actor从队列的前面挑选消息。</li>
+<li>Actor修改内部状态，向其他Actor发送消息。</li>
+<li>Actor的执行是非计划的。</li>
+</ol>
+<p>为了完成这个行为，Actor有：</p>
+<ul>
+<li>An Mailbox （消息的队列）。</li>
+<li>An Behavior （Actor的状态，内部变量等）。</li>
+<li>Messages （表示信号的数据片段，类似于方法调用及其参数）。</li>
+<li>An Execution Environment（采取具有消息的Actor的反应和调用其消息处理代码的机制）。</li>
+<li>An Address （稍后再说）。</li>
+</ul>
+<p>​    消息被放入所谓的Actor邮箱中。Actor的行为描述了Actor如何响应消息（如发送更多的消息和/或改变状态）。Execution Environment编排一个线程池，完全透明地驱动所有上述操作。</p>
+<p>这是一个非常简单的模型，它解决了之前枚举的问题：</p>
+<ul>
+<li>通过将执行从信令中解耦来保留封装。</li>
+<li>不需要锁。修改Actor的内部状态只能通过消息进行处理，一次只处理一条消息。</li>
+<li>任何地方都没有锁，发件人没有被阻塞。数十万的Actor可以有效地安排在十几个线程上，充分发挥现代CPU的潜力。任务授权是Actor的自然操作模式。</li>
+<li>Actor状态是本地的，不共享，变化和数据通过消息传播，映射到现代内存层次结构的实际工作原理。在许多情况下，这意味着仅在包含消息中的数据的缓存中传输，同时保持本地状态和数据缓存在原始核心。相同的模型精确地映射到远程通信，其中状态保存在机器的RAM中，并且变化/数据通过网络作为数据包传播。</li>
+</ul>
+<h3 id="2-Actor优雅地处理错误"><a href="#2-Actor优雅地处理错误" class="headerlink" title="2.Actor优雅地处理错误"></a>2.Actor优雅地处理错误</h3><p>​    由于我们不再在彼此发送消息的Actors之间存在共享的调用堆栈，所以我们需要以不同的方式处理错误情况。我们需要考虑两种错误：</p>
+<ul>
+<li>第一种情况是由于任务中的错误导致目标Actor上的委派任务失败（例如一些验证问题，如不存在的用户标识）。在这种情况下，由目标Actor封装的服务是完整的，只是任务本身是错误的。服务Actor应该回复给发件人一个消息，提出错误的情况。这里没有什么特别之处，错误是域的一部分，因此是普通消息。</li>
+<li>第二种情况是服务本身遇到内部故障时。Akka强制所有Actor被组织成一个树状的层次结构，即创建另一个Actor的Actor成为新Actor的Supervisor（父母）。这与操作系统如何将流程组合到树中非常相似。就像进程一样，当一个Actor失败时，它的父Actor被通知，它可以对失败做出反应。此外，如果父Actor停止，其所有子项也被递归停止。这项服务被称为监督，它是Akka的核心。</li>
+</ul>
+<p><img src="/images/Introduction-to-Akka9.png" alt="演员监督和处理小孩演员的失败"></p>
+<p>​    Supervisor （父母）可以决定在某些类型的故障情况下重新启动其子Actor，或者将他们完全停止。Children永远不会静静地死亡（除了进入无限循环的例外），而是失败，Supervisor 可以对故障做出反应，或者他们（Children）被停止（在这种情况下，有兴趣的一方会自动通知）。总是有一个责任实体来管理一个Actor：它的Supervisor 。重新启动从外部不可见：协作Actor可以继续发送消息，而目标Actor重新启动。</p>
+<p><a rel="external" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"></a><br>本作品采用<a rel="external" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Akka/" rel="tag"># Akka</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/12/akka-networking-cluster-usage/" rel="next" title="Akka-Networking Cluster Usage">
+                <i class="fa fa-chevron-left"></i> Akka-Networking Cluster Usage
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Ryan Cui" />
+          <p class="site-author-name" itemprop="name">Ryan Cui</p>
+           
+              <p class="site-description motion-element" itemprop="description">Cooking Code Cooking Life</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Ryan-Cui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/CookCode" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Akka：Introduction-to-Akka"><span class="nav-number">1.</span> <span class="nav-text">Akka：Introduction to Akka</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Akka简介"><span class="nav-number">1.1.</span> <span class="nav-text">1. Akka简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-什么是Actor模型"><span class="nav-number">1.2.</span> <span class="nav-text">2. 什么是Actor模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Actor-模型解决什么问题？"><span class="nav-number">1.3.</span> <span class="nav-text">3. Actor 模型解决什么问题？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-封装的错误认识"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. 封装的错误认识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-共享内存在现代计算机架构上的错误认识"><span class="nav-number">1.3.2.</span> <span class="nav-text">2. 共享内存在现代计算机架构上的错误认识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-调用堆栈的错误认识"><span class="nav-number">1.3.3.</span> <span class="nav-text">3. 调用堆栈的错误认识</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Actor模式如何满足并发、分布式系统的需求"><span class="nav-number">1.4.</span> <span class="nav-text">4.Actor模式如何满足并发、分布式系统的需求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-使用消息的传递，避免了锁和阻塞"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.使用消息的传递，避免了锁和阻塞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Actor优雅地处理错误"><span class="nav-number">1.4.2.</span> <span class="nav-text">2.Actor优雅地处理错误</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ryan Cui</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "2a9c2176f19445cdbf9a4af911c9e6ea",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
