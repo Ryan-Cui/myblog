@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Functional_Programming," />
+  <meta name="keywords" content="Akka," />
 
 
 
@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="函数的副作用​    人们都说，一个纯粹的函数式程序是没有副作用的。那么什么是副作用呢？">
-<meta name="keywords" content="Functional_Programming">
+<meta name="description" content="Akka集群单例​    对于某些使用情况，方便、有时也是强制性的，以确保只有一个运行在群集某处的某个类型的actor。">
+<meta name="keywords" content="Akka">
 <meta property="og:type" content="article">
-<meta property="og:title" content="What is a “side effect?”">
-<meta property="og:url" content="https://cookcode.science/2017/08/02/side-effect/index.html">
+<meta property="og:title" content="Akka Cluster Singleton">
+<meta property="og:url" content="https://cookcode.science/2017/08/04/akka-cluster-singleton/index.html">
 <meta property="og:site_name" content="Ryan Cui&#39;s Bolg">
-<meta property="og:description" content="函数的副作用​    人们都说，一个纯粹的函数式程序是没有副作用的。那么什么是副作用呢？">
+<meta property="og:description" content="Akka集群单例​    对于某些使用情况，方便、有时也是强制性的，以确保只有一个运行在群集某处的某个类型的actor。">
 <meta property="og:image" content="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png">
-<meta property="og:updated_time" content="2017-08-22T02:07:53.722Z">
+<meta property="og:updated_time" content="2017-08-22T06:55:08.358Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="What is a “side effect?”">
-<meta name="twitter:description" content="函数的副作用​    人们都说，一个纯粹的函数式程序是没有副作用的。那么什么是副作用呢？">
+<meta name="twitter:title" content="Akka Cluster Singleton">
+<meta name="twitter:description" content="Akka集群单例​    对于某些使用情况，方便、有时也是强制性的，以确保只有一个运行在群集某处的某个类型的actor。">
 <meta name="twitter:image" content="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png">
 
 
@@ -130,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="https://cookcode.science/2017/08/02/side-effect/"/>
+  <link rel="canonical" href="https://cookcode.science/2017/08/04/akka-cluster-singleton/"/>
 
 
 
 
 
-  <title>What is a “side effect?” | Ryan Cui's Bolg</title>
+  <title>Akka Cluster Singleton | Ryan Cui's Bolg</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -295,7 +295,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://cookcode.science/2017/08/02/side-effect/">
+    <link itemprop="mainEntityOfPage" href="https://cookcode.science/2017/08/04/akka-cluster-singleton/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ryan Cui">
@@ -312,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">What is a “side effect?”</h1>
+          <h1 class="post-title" itemprop="name headline">Akka Cluster Singleton</h1>
         
 
         <div class="post-meta">
@@ -324,8 +324,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-02T00:00:00+08:00">
-                2017-08-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-04T00:00:00+08:00">
+                2017-08-04
               </time>
             
 
@@ -347,8 +347,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Functional-Programming/" itemprop="url" rel="index">
-                    <span itemprop="name">Functional_Programming</span>
+                  <a href="/categories/Akka/" itemprop="url" rel="index">
+                    <span itemprop="name">Akka</span>
                   </a>
                 </span>
 
@@ -365,7 +365,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/08/02/side-effect/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2017/08/04/akka-cluster-singleton/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -396,41 +396,50 @@
       
 
       
-        <h2 id="函数的副作用"><a href="#函数的副作用" class="headerlink" title="函数的副作用"></a>函数的副作用</h2><p>​    人们都说，一个纯粹的函数式程序是没有副作用的。那么什么是副作用呢？</p>
+        <h2 id="Akka集群单例"><a href="#Akka集群单例" class="headerlink" title="Akka集群单例"></a>Akka集群单例</h2><p>​    对于某些使用情况，方便、有时也是强制性的，以确保只有一个运行在群集某处的某个类型的actor。</p>
 <a id="more"></a>
-<p>​    Wikipedia中是这样描述的：“在计算机科学中，<strong>函数副作用</strong>指当调用<strong>函数</strong>时，除了<strong>返回函数值</strong>之外，还<strong>对主调用函数产生附加的影响</strong>。”</p>
-<p>​    例如修改全局变量（函数外的变量）或修改参数。函数副作用会给程序设计带来不必要的麻烦，给程序带来十分难以查找的错误，并降低程序的可读性。严格的函数式语言要求函数必须无副作用。</p>
-<p>​    副作用包括以下内容：</p>
+<p>例如：</p>
 <ul>
-<li>IO输出</li>
-<li>IO读</li>
-<li>修改一个参数的状态，修改一个数据结构中的数据，或者修改一个对象的某个属性的值</li>
-<li>抛出异常，或者当错误发生时停止整个程序</li>
-<li><p>调用了其他有副作用的函数</p>
-<p>​下面是函数的副作用相关的几个概念，<strong>纯函数</strong>（Pure Function）、<strong>非纯函数</strong>（Impure Function）、<strong>引用透明</strong>（Referential Transparent）。</p>
+<li>针对集群范围内某些统一决策的单一责任点，或协调集群系统中的行为。</li>
+<li>进入到外部系统的单点。</li>
+<li>单个管理者，多个工作者。</li>
+<li>统一命名服务或路由逻辑</li>
+</ul>
+<p>​    使用单例不应该是程序设计的首选。它有几个缺点，例如单点瓶颈。单点故障也是一个相关的问题，但是在某些情况下，这个功能会通过确保最终启动另一个单例实例来处理这一点。</p>
+<p>​    集群单例模式由akka.cluster.singleton.ClusterSingletonManager实现。它在所有集群节点或标有特定角色的一组节点之间管理一个单例Actor实例。    ClusterSingletonManager是一个Actor，应该在集群中的所有节点或具有指定角色的所有节点上启动。实际的单例Actor由最早的节点上的ClusterSingletonManager启动，通过从提供的Props创建一个子Actor。正在任何时间点，ClusterSingletonManager确保至多只有一个单例实例运行。</p>
+<p>​    单例Actor总是在具有指定角色的最老的集群成员身上运行。最老的成员由akka.cluster.Member#isOlderThan决定。从群集中删除该成员时，可能会发生更改。请注意，在移交过程中有很短的一段时间里，单例是不活跃的。</p>
+<p>​    集群故障检测器会注意到由于JVM崩溃，硬停机或网络故障等原因，最旧的节点变得无法访问。然后一个新的最旧的节点将接管，并创建一个新的单例Actor。对于这些失败的情况，将不会有优雅的交接，但是应通过一切合理的手段避免集群中存在一个以上的单例Actor。</p>
+<p>​    可以使用akka.cluster.singleton.ClusterSingletonProxy访问单例Actor，它会将所有消息路由到单例的当前实例。ClusterSingletonProxy将跟踪集群中最旧的节点，并通过actorSelection向单例发送akka.actor.Identify消息并等待它回复来解析单例的ActorRef。如果单例在某个时间（可配置）内没有回复，则会定期执行。鉴于实现，可能存在ActorRef不可用的时间段，例如当节点离开集群时。 在这些情况下，ClusterSingletonProxy将缓冲发送给单例的消息，然后在单例最终可用时传递消息。如果缓冲区已满，当通过ClusterSingletonProxy发送新消息时，ClusterSingletonProxy将丢弃旧消息。缓冲区的大小是可配置的，并且可以通过使用缓冲区大小为0禁用它。</p>
+<p>​    值得注意的是，由于这些Actor的分布性，消息总是会丢失的。一如以往，在单例（确认）和客户端Actor（重试）中应该实现额外的逻辑，以确保消息至少一次交付。</p>
+<p>​    单例实例不会运行在状态为<a href="http://doc.akka.io/docs/akka/current/java/cluster-usage.html#weakly-up" target="_blank" rel="external">WeaklyUp</a>的成员上。 </p>
+<h2 id="需要注意的潜在问题"><a href="#需要注意的潜在问题" class="headerlink" title="需要注意的潜在问题"></a>需要注意的潜在问题</h2><p>​    这种模式起初似乎是非常诱人的，但它有几个缺点，其中一些如下：</p>
+<ul>
+<li><p>集群单例可能很快成为性能瓶颈。</p>
+</li>
+<li><p>不能指望集群单例是永远可用的。例如，当单例已经在运行的节点处于死亡状态时，注意需要几秒钟，并将单例迁移到另一个节点。</p>
+</li>
+<li><p>出现在使用Automatic Downing的群集中的网络分区的情况下（参见 <a href="http://doc.akka.io/docs/akka/current/java/cluster-usage.html#automatic-vs-manual-downing" target="_blank" rel="external">Downing</a>文档），可能会发生孤立的群集各自决定创建自己的单例，这意味着系统中可能会运行多个单例 ，但是集群无法找出它们（因为分区）。</p>
+<p>​特别是最后一点是应该注意的地方。一般来说，当使用Cluster Singleton模式时，应该自己负责downing节点，而不是依赖基于时序的自动关闭功能。</p>
 </li>
 </ul>
-<h3 id="纯函数（Pure-Function）"><a href="#纯函数（Pure-Function）" class="headerlink" title="纯函数（Pure Function）"></a>纯函数（Pure Function）</h3><p>​    ——输入输出数据流全是<strong>显式（Explicit）</strong>的。</p>
-<p>​    <strong>显式</strong>（Explicit）的意思是，函数与外界交换数据只有一个唯一渠道——参数和返回值；函数从函数外部接受的所有输入信息都通过参数传递到该函数内部；函数输出到函数外部的所有信息都通过返回值传递到该函数外部。</p>
-<h3 id="非纯函数"><a href="#非纯函数" class="headerlink" title="非纯函数"></a>非纯函数</h3><p>​    如果一个函数通过<strong>隐式（Implicit）</strong>方式，从外界获取数据，或者向外部输出数据，那么，该函数就不是纯函数，叫作非纯函数（Impure Function）。</p>
-<p>​    <strong>隐式</strong>（Implicit）的意思是，函数通过参数和返回值以外的渠道，和外界进行数据交换。比如，读取全局变量，修改全局变量，都叫作以隐式的方式和外界进行数据交换；比如，利用 I/O API（输入输出系统函数库）读取配置文件，或者输出到文件，打印到屏幕，都叫做隐式的方式和外界进行数据交换。</p>
-<p>​    I/O API 可以看作是一种特殊的全局变量。文件、屏幕、数据库等输入输出结构可以看作是独立于运行环境之外的系统外全局变量，而不是应用程序自己定义的全局变量。</p>
-<p>​    纯函数内部有隐式（Implicit）的数据流，这种情况叫做<strong>副作用</strong>（Side Effect）。上述的I/O，外部变量等，都可以归为副作用。因此，纯函数的定义也可以写为“没有副作用的函数”。</p>
-<h3 id="引用透明"><a href="#引用透明" class="headerlink" title="引用透明"></a>引用透明</h3><p>​    <strong>引用透明</strong>（Referential Transparent）的概念与函数的副作用相关，且受其影响。如果程序中任意两处具有相同输入值的函数调用能够互相置换，而不影响程序的动作，那么该程序就具有引用透明性。它的优点是比非引用透明的语言的语义更容易理解，不那么晦涩。纯函数式语言没有变量，所以它们都具有引用透明性。</p>
-<h3 id="特殊的函数副作用"><a href="#特殊的函数副作用" class="headerlink" title="特殊的函数副作用"></a>特殊的函数副作用</h3><p>​    上述只讨论了一般的情况，还有一种特殊的情况，我们没有讨论。有些函数的参数是一种 In/Out 作用的参数，即函数可能改变参数里面的内容，把一些信息通过输入参数，夹带到外界。这种情况，严格来说，也是副作用。也是<strong>非纯函数</strong>。 比如下面的函数。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">process(context) &#123;</div><div class="line">   a = context.getInfo()</div><div class="line">   result = calculate(a)</div><div class="line">   context.setResult(result)</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-<p>​    </p>
-<h3 id="纯函数的特征"><a href="#纯函数的特征" class="headerlink" title="纯函数的特征"></a>纯函数的特征</h3><p>​        理论上，无副作用的函数更容易被测试。假设有一个把值相加的函数，如 + 。给定数字1和2，结果必定是3。一个像这样的无副作用的函数有如下特征：</p>
-<ul>
-<li>输入不可变</li>
-<li>结果一致</li>
-<li>没有任何其他操作</li>
-</ul>
-<h3 id="纯函数的优点"><a href="#纯函数的优点" class="headerlink" title="纯函数的优点"></a>纯函数的优点</h3><ul>
-<li>无状态。线程安全。不需要线程同步。</li>
-<li>纯函数相互调用组装起来的函数，还是纯函数。</li>
-<li>应用程序或者运行环境（Runtime）可以对纯函数的运算结果进行缓存，运算加快速度。<br>因为这样的函数没有副作用，它很容易被测试。</li>
-</ul>
+<blockquote>
+<p>警告：</p>
+<p>​    不要将Cluster Singleton与自动Automatic Downing一起使用，因为它允许集群分成两个独立的集群，这反过来将导致多个Singleton启动，每个独立的集群中会有一个！</p>
+</blockquote>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>​    假设我们需要一个单独的入口到外部系统。从JMS队列接收消息的Actor，严格要求必须只有一个JMS消费者存在，才能确保消息按顺序处理。这可能不是想要设计的东西，但是与外部系统集成时的典型的现实场景。</p>
+<p>​    在集群中的每个节点上，需要启动ClusterSingletonManager并提供单例Actor的Props，做为JMS队列消费者。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">final</span> ClusterSingletonManagerSettings settings =</div><div class="line">  ClusterSingletonManagerSettings.create(system).withRole(<span class="string">"worker"</span>);</div><div class="line">system.actorOf(ClusterSingletonManager.props(</div><div class="line">  Props.create(Consumer.class, queue, testActor),</div><div class="line">  <span class="keyword">new</span> End(), settings), <span class="string">"consumer"</span>);</div></pre></td></tr></table></figure>
+<p>​    这里我们将单例限制为用“worker”角色标记的节点，但是所有节点，独立于角色，都可以通过不指定withRole来使用。</p>
+<p>​    在这里，我们使用一个特定于应用程序的终端消息，在实际停止单例Actor之前关闭资源。请注意，如果只需要停止Actor，PoisonPill就是一个完美的终端消息。    </p>
+<p>​    使用上面给出的名称，可以使用正确配置的ClusterSingletonProxy从任何集群节点获取单例的访问。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ClusterSingletonProxySettings proxySettings =</div><div class="line">    ClusterSingletonProxySettings.create(system).withRole(<span class="string">"worker"</span>);</div><div class="line">system.actorOf(ClusterSingletonProxy.props(<span class="string">"/user/consumer"</span>, proxySettings), </div><div class="line">    <span class="string">"consumerProxy"</span>);</div></pre></td></tr></table></figure>
+<p><a href="https://github.com/typesafehub/activator-akka-distributed-workers-java" target="_blank" rel="external">Distributed workers with Akka and Java!</a>中提供了更全面的示例。</p>
+<h2 id="Dependencies"><a href="#Dependencies" class="headerlink" title="Dependencies"></a>Dependencies</h2><p>​    要使用Cluster Singleton，必须在项目中添加以下依赖项。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.typesafe.akka<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>akka-cluster-tools_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.5.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h2><p>​    当使用ActorSystem参数创建时，ClusterSingletonManagerSettings将读取以下配置属性。也可以修改ClusterSingletonManagerSettings，或者从另一个配置部分创建如下相同的布局。ClusterSingletonManagerSettings是ClusterSingletonManager.props工厂方法的参数，即每个单例可以根据需要配置不同的设置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">akka.cluster.singleton &#123;</div><div class="line">  # The actor name of the child singleton actor.</div><div class="line">  singleton-name = &quot;singleton&quot;</div><div class="line">  </div><div class="line">  # Singleton among the nodes tagged with specified role.</div><div class="line">  # If the role is not specified it&apos;s a singleton among all nodes in the cluster.</div><div class="line">  role = &quot;&quot;</div><div class="line">  </div><div class="line">  # When a node is becoming oldest it sends hand-over request to previous oldest, </div><div class="line">  # that might be leaving the cluster. This is retried with this interval until </div><div class="line">  # the previous oldest confirms that the hand over has started or the previous </div><div class="line">  # oldest member is removed from the cluster (+ akka.cluster.down-removal-margin).</div><div class="line">  hand-over-retry-interval = 1s</div><div class="line">  </div><div class="line">  # The number of retries are derived from hand-over-retry-interval and</div><div class="line">  # akka.cluster.down-removal-margin (or ClusterSingletonManagerSettings.removalMargin),</div><div class="line">  # but it will never be less than this property.</div><div class="line">  min-number-of-hand-over-retries = 10</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>​    当使用ActorSystem参数创建时，ClusterSingletonProxySettings将读取以下配置属性。也可以修改ClusterSingletonProxySettings，或者从另一个配置部分创建如下相同的布局。ClusterSingletonProxySettings是ClusterSingletonProxy.props工厂方法的参数，即每个单例代理可以根据需要配置不同的设置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">akka.cluster.singleton-proxy &#123;</div><div class="line">  # The actor name of the singleton actor that is started by the ClusterSingletonManager</div><div class="line">  singleton-name = $&#123;akka.cluster.singleton.singleton-name&#125;</div><div class="line">  </div><div class="line">  # The role of the cluster nodes where the singleton can be deployed. </div><div class="line">  # If the role is not specified then any node will do.</div><div class="line">  role = &quot;&quot;</div><div class="line">  </div><div class="line">  # Interval at which the proxy will try to resolve the singleton instance.</div><div class="line">  singleton-identification-interval = 1s</div><div class="line">  </div><div class="line">  # If the location of the singleton is unknown the proxy will buffer this</div><div class="line">  # number of messages and deliver them when the singleton is identified. </div><div class="line">  # When the buffer is full old messages will be dropped when new messages are</div><div class="line">  # sent via the proxy.</div><div class="line">  # Use 0 to disable buffering, i.e. messages will be dropped immediately if</div><div class="line">  # the location of the singleton is unknown.</div><div class="line">  # Maximum allowed buffer size is 10000.</div><div class="line">  buffer-size = 1000 </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><a rel="external" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"></a><br>本作品采用<a rel="external" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可。</p>
 
       
@@ -461,7 +470,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Functional-Programming/" rel="tag"># Functional_Programming</a>
+            <a href="/tags/Akka/" rel="tag"># Akka</a>
           
         </div>
       
@@ -474,8 +483,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/21/design-pattern-essentials/" rel="next" title="Design Pattern Essentials">
-                <i class="fa fa-chevron-left"></i> Design Pattern Essentials
+              <a href="/2017/08/02/side-effect/" rel="next" title="What is a “side effect?”">
+                <i class="fa fa-chevron-left"></i> What is a “side effect?”
               </a>
             
           </div>
@@ -483,10 +492,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/08/04/akka-cluster-singleton/" rel="prev" title="Akka Cluster Singleton">
-                Akka Cluster Singleton <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -660,7 +665,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的副作用"><span class="nav-number">1.</span> <span class="nav-text">函数的副作用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#纯函数（Pure-Function）"><span class="nav-number">1.1.</span> <span class="nav-text">纯函数（Pure Function）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非纯函数"><span class="nav-number">1.2.</span> <span class="nav-text">非纯函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用透明"><span class="nav-number">1.3.</span> <span class="nav-text">引用透明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊的函数副作用"><span class="nav-number">1.4.</span> <span class="nav-text">特殊的函数副作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#纯函数的特征"><span class="nav-number">1.5.</span> <span class="nav-text">纯函数的特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#纯函数的优点"><span class="nav-number">1.6.</span> <span class="nav-text">纯函数的优点</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Akka集群单例"><span class="nav-number">1.</span> <span class="nav-text">Akka集群单例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#需要注意的潜在问题"><span class="nav-number">2.</span> <span class="nav-text">需要注意的潜在问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#示例"><span class="nav-number">2.1.</span> <span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dependencies"><span class="nav-number">3.</span> <span class="nav-text">Dependencies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Configuration"><span class="nav-number">4.</span> <span class="nav-text">Configuration</span></a></li></ol></div>
             
 
           </div>
