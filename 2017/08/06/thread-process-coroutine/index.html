@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Thought," />
 
 
 
@@ -90,15 +90,19 @@
 
 
 
-<meta name="description" content="Cooking Code Cooking Life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Ryan Cui&#39;s Bolg">
-<meta property="og:url" content="https://cookcode.science/categories/Akka/index.html">
+<meta name="description" content="进程、线程和协程简述进程、线程和协程的基本概念。">
+<meta name="keywords" content="Thought">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Process Thread Coroutine">
+<meta property="og:url" content="https://cookcode.science/2017/08/06/thread-process-coroutine/index.html">
 <meta property="og:site_name" content="Ryan Cui&#39;s Bolg">
-<meta property="og:description" content="Cooking Code Cooking Life">
+<meta property="og:description" content="进程、线程和协程简述进程、线程和协程的基本概念。">
+<meta property="og:image" content="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png">
+<meta property="og:updated_time" content="2017-08-25T08:23:10.644Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ryan Cui&#39;s Bolg">
-<meta name="twitter:description" content="Cooking Code Cooking Life">
+<meta name="twitter:title" content="Process Thread Coroutine">
+<meta name="twitter:description" content="进程、线程和协程简述进程、线程和协程的基本概念。">
+<meta name="twitter:image" content="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png">
 
 
 
@@ -126,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="https://cookcode.science/categories/Akka/"/>
+  <link rel="canonical" href="https://cookcode.science/2017/08/06/thread-process-coroutine/"/>
 
 
 
 
 
-  <title>分类: Akka | Ryan Cui's Bolg</title>
+  <title>Process Thread Coroutine | Ryan Cui's Bolg</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -177,7 +181,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -325,129 +329,259 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h1>Akka<small>分类</small>
-      </h1>
-    </div>
-
+  <div id="posts" class="posts-expand">
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/08/04/akka-cluster-singleton/" itemprop="url">
-              
-                <span itemprop="name">Akka Cluster Singleton</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-04T00:00:00+08:00"
-              content="2017-08-04" >
-          08-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/06/25/akka-Introduction/" itemprop="url">
-              
-                <span itemprop="name">Introduction to Akka</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-25T00:00:00+08:00"
-              content="2017-06-25" >
-          06-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/06/12/akka-networking-cluster-usage/" itemprop="url">
-              
-                <span itemprop="name">Akka-Networking Cluster Usage</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-12T00:00:00+08:00"
-              content="2017-06-12" >
-          06-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/06/11/akka-networking-cluster-specification/" itemprop="url">
-              
-                <span itemprop="name">Akka-Networking Cluster Specification</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-11T00:00:00+08:00"
-              content="2017-06-11" >
-          06-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-  </section>
 
   
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://cookcode.science/2017/08/06/thread-process-coroutine/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ryan Cui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ryan Cui's Bolg">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Process Thread Coroutine</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-06T00:00:00+08:00">
+                2017-08-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Thought/" itemprop="url" rel="index">
+                    <span itemprop="name">Thought</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/08/06/thread-process-coroutine/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/08/06/thread-process-coroutine/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="进程、线程和协程"><a href="#进程、线程和协程" class="headerlink" title="进程、线程和协程"></a>进程、线程和协程</h1><p>简述进程、线程和协程的基本概念。</p>
+<p><a id="more"></a>　　</p>
+<h2 id="1-进程"><a href="#1-进程" class="headerlink" title="1. 进程"></a>1. 进程</h2><h3 id="1-1-基本概念"><a href="#1-1-基本概念" class="headerlink" title="1.1 基本概念"></a>1.1 基本概念</h3><p>​    进程（process），是<strong>计算机中已运行程序的实体</strong>。进程为曾经是分时系统的基本运作单位。在面向进程设计的系统（如早期的UNIX，Linux 2.4及更早的版本）中，进程是程序的基本执行实体；在面向线程设计的系统（如当代多数操作系统、Linux 2.6及更新的版本）中，进程本身不是基本运行单位，而是线程的容器。</p>
+<p>​    程序本身只是指令、数据及其组织形式的描述，进程才是程序（那些指令和数据）的真正运行实例。若干进程有可能与同一个程序相关系，且每个进程皆可以同步（循序）或异步（平行）的方式独立运行。</p>
+<p>​    现代计算机系统可在同一段时间内以进程的形式将多个程序加载到内存中，并借由时间共享（或称时分复用），以在一个处理器上表现出同时（平行性）运行的感觉。同样的，使用多线程技术（多线程即每一个线程都代表一个进程内的一个独立执行上下文）的操作系统或计算机架构，同样程序的平行线程，可在多CPU主机或网络上真正同时运行（在不同的CPU上）。</p>
+<p>​    当用户下达运行程序的命令后，就会产生进程。同一程序可产生多个进程（一对多关系），以允许同时有多位用户运行同一程序，却不会相冲突。</p>
+<p>​    进程需要一些资源才能完成工作，如CPU使用时间、内存、文件以及I/O设备，且为依序逐一进行，也就是每个CPU核心任何时间内仅能运行一项进程。</p>
+<p>一个计算机系统进程包括（或者说“拥有”）下列数据：</p>
+<ul>
+<li>那个程序的可运行机器码的一个在内存的映像。</li>
+<li>分配到的内存（通常是虚拟的一个内存区域）。内存的内容包括可运行代码、特定于进程的数据（输入、输出）、调用堆栈、堆栈（用于保存运行时运输中途产生的数据）。</li>
+<li>分配给该进程的资源的操作系统描述符，诸如<em>文件描述符</em>（Unix术语）或<em>文件句柄</em>（Windows）、数据源和数据终端。</li>
+<li>安全特性，诸如进程拥有者和进程的权限集（可以容许的操作）。</li>
+<li>处理器状态（内文），诸如寄存器内容、物理内存定址等。当进程正在运行时，状态通常存储在寄存器，其他情况在内存。</li>
+</ul>
+<p>进程在运行时，状态（<em>state</em>）会改变。所谓状态，就是指进程目前的动作：</p>
+<ul>
+<li>新生（<em>new</em>）：进程新产生中。</li>
+<li>运行（<em>running</em>）：正在运行。</li>
+<li>等待（<em>waiting</em>）：等待某事发生，例如等待用户输入完成。亦称“阻塞”（<em>blocked</em>）</li>
+<li>就绪（<em>ready</em>）：排班中，等待CPU。</li>
+<li>结束（<em>terminated</em>）：完成运行。</li>
+</ul>
+<p>各状态名称可能随不同操作系统而相异；对于单CPU系统（UP），任何时间可能有多个进程为等待、就绪，但必定仅有一个进程在运行。</p>
+<h3 id="1-2-进程间通讯"><a href="#1-2-进程间通讯" class="headerlink" title="1.2 进程间通讯"></a>1.2 进程间通讯</h3><p>​    进程间通信（IPC，<em>Inter-Process Communication</em>），指至少两个进程间传送数据或信号的一些技术或方法。每个进程都有自己的一部分独立的系统资源，彼此是隔离的。为了能使不同的进程互相访问资源并进行协调工作，才有了进程间通信。</p>
+<p>​    举一个典型的例子，使用进程间通信的两个应用可以被分类为客户端和服务器（见主从式架构），客户端进程请求数据，服务端回复客户端的数据请求。有一些应用本身既是服务器又是客户端，这在分布式计算中，时常可以见到。这些进程可以运行在同一计算机上或网络连接的不同计算机上。</p>
+<p>​    进程间通信技术包括消息传递、共享内存和远程过程调用等。</p>
+<h3 id="1-3-时间片"><a href="#1-3-时间片" class="headerlink" title="1.3 时间片"></a>1.3 时间片</h3><p>​    时间片（timeslice）又称为“量子（quantum）”或“处理器片（processor slice）”是分时操作系统分配给每个正在运行的进程微观上的一段CPU时间（在抢占内核中是：从进程开始运行直到被抢占的时间）。</p>
+<p>​    现代操作系统（如：Windows、Linux、Mac OS X等）允许同时运行多个进程 —— 例如，你可以在打开音乐播放器听音乐的同时用浏览器浏览网页并下载文件。事实上，由于一台计算机通常只有一个CPU（单核），所以永远不可能真正地同时运行多个任务。这些进程“看起来像”同时运行的，实则是轮番穿插地运行，由于时间片通常很短（在Linux上为5ms－800ms），用户不会感觉到。</p>
+<p>​    时间片由操作系统内核的调度程序分配给每个进程。首先，内核会给每个进程分配相等的初始时间片，然后每个进程轮番地执行相应的时间，当所有进程都处于时间片耗尽的状态时，内核会重新为每个进程计算并分配时间片，如此往复。</p>
+<p>​    通常状况下，一个系统中所有的进程被分配到的时间片长短并不是相等的，尽管初始时间片基本相等（在Linux系统中，初始时间片也不相等，而是各自父进程的一半），系统通过测量进程处于“睡眠”和“正在运行”状态的时间长短来计算每个进程的交互性，交互性和每个进程预设的静态优先级（Nice值）的叠加即是动态优先级，动态优先级按比例缩放就是要分配给那个进程时间片的长短。一般地，为了获得较快的响应速度，交互性强的进程（即趋向于IO消耗型）被分配到的时间片要长于交互性弱的（趋向于处理器消耗型）进程。</p>
+<h3 id="1-4-进程树"><a href="#1-4-进程树" class="headerlink" title="1.4 进程树"></a>1.4 进程树</h3><p>​    进程树(Process tree)是计算机科学中的术语，又称为进程图(Process map)或进程家族树(Process graph)，是一种表示进程、关系的直观方法。进程树中的进程分为父进程和子进程两种基本类型。</p>
+<p>​    进程树的概念基于图论中的有向树的概念。一个进程树由若干个系统进程和它们之间的关系构成。进程树中的每个进程是树的节点。如果进程A创建了进程B，就称A是B的父进程，B是A的子进程。若一个进程不是任何其它进程的子进程，则称之为根进程或进程家族的祖先。</p>
+<h2 id="2-线程"><a href="#2-线程" class="headerlink" title="2. 线程"></a>2. 线程</h2><h3 id="2-1基本概念"><a href="#2-1基本概念" class="headerlink" title="2.1基本概念"></a>2.1基本概念</h3><p>​    线程（thread）是操作系统能够<strong>进行运算调度的最小单位</strong>。它被包含在进程之中，是进程中的实际运作单位。一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。在Unix System V及SunOS中也被称为轻量进程（lightweight processes），但轻量进程更多指内核线程（kernel thread），而把用户线程（user thread）称为线程。</p>
+<p>​    线程是<strong>独立调度和分派的基本单位</strong>。线程可以操作系统内核调度的内核线程，如Win32线程；由用户进程自行调度的用户线程，如Linux平台的POSIX Thread；或者由内核与用户进程，如Windows 7的线程，进行混合调度。</p>
+<p>​    同一进程中的多条线程将共享该进程中的全部系统资源，如虚拟地址空间，文件描述符和信号处理等等。但同一进程中的多个线程有各自的调用栈（call stack），自己的寄存器环境（register context），自己的线程本地存储（thread-local storage）。</p>
+<p>​    一个进程可以有很多线程，每条线程并行执行不同的任务。</p>
+<p>​    在多核或多CPU，或支持Hyper-threading的CPU上使用多线程程序设计的好处是显而易见，即提高了程序的执行吞吐率。在单CPU单核的计算机上，使用多线程技术，也可以把进程中负责IO处理、人机交互而常被阻塞的部分与密集计算的部分分开来执行，编写专门的workhorse线程执行密集计算，从而提高了程序的执行效率。</p>
+<p>线程有四种基本状态，分别为：</p>
+<ul>
+<li>产生（spawn）</li>
+<li>中断（block）</li>
+<li>非中断（unblock）</li>
+<li>结束（finish）</li>
+</ul>
+<h2 id="3-协程"><a href="#3-协程" class="headerlink" title="3. 协程"></a>3. 协程</h2><h3 id="3-1-子例程"><a href="#3-1-子例程" class="headerlink" title="3.1 子例程"></a>3.1 子例程</h3><p>​    在了解协程之前，应先了解子例程的基本概念。</p>
+<p>​    在计算机科学中，<strong>子程序</strong>（Subroutine），是一个大型程序中的某部分代码，由一个或多个语句块组成。它负责完成某项特定任务，而且相较于其他代码，具备相对的独立性。</p>
+<h3 id="3-2-协程"><a href="#3-2-协程" class="headerlink" title="3.2 协程"></a>3.2 协程</h3><p>​    协程（coroutine）与子例程一样，也是一种程序组件。协程不是进程或线程，其执行过程更类似于子例程，或者说不带返回值的函数调用。</p>
+<p>​    一个程序可以包含多个协程，可以对比与一个进程包含多个线程，因而下面我们来比较协程和线程。我们知道多个线程相对独立，有自己的上下文，切换受系统控制；而协程也相对独立，有自己的上下文，但是其切换由自己控制，当前协程切换到其他协程由当前协程来控制。</p>
+<p><a rel="external" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"></a><br>本作品采用<a rel="external" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Thought/" rel="tag"># Thought</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/05/Java-History/" rel="next" title="Java History">
+                <i class="fa fa-chevron-left"></i> Java History
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -455,6 +589,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="hypercomments_widget"></div>
+    
+  </div>
+
 
         </div>
         
@@ -474,8 +614,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -557,6 +706,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#进程、线程和协程"><span class="nav-number">1.</span> <span class="nav-text">进程、线程和协程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-进程"><span class="nav-number">1.1.</span> <span class="nav-text">1. 进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-基本概念"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-进程间通讯"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 进程间通讯</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-时间片"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 时间片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-进程树"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 进程树</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-线程"><span class="nav-number">1.2.</span> <span class="nav-text">2. 线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1基本概念"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1基本概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-协程"><span class="nav-number">1.3.</span> <span class="nav-text">3. 协程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-子例程"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 子例程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-协程"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 协程</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -702,6 +867,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
 
   
 
@@ -725,6 +894,8 @@
 
 		_hcwp.push({widget:"Bloggerstream", widget_id: 94709, selector:".hc-comment-count", label: "{\%COUNT%\}" });
 
+		
+		_hcwp.push({widget:"Stream", widget_id: 94709, xid: "2017/08/06/thread-process-coroutine/"});
 		
 
 		(function() {
@@ -1079,26 +1250,6 @@
   
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
