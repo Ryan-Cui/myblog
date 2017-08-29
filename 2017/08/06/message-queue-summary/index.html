@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Thought," />
+  <meta name="keywords" content="MQ," />
 
 
 
@@ -90,19 +90,20 @@
 
 
 
-<meta name="description" content="如何求解　　引用一段秦小波对《深入理解Java虚拟机》书评中的一段：　　在武侠的世界里，无论是至刚至强的《易筋经》，还是阴柔无比的《葵花宝典》，都离不开内功修炼。没有内功心法，这些武术都只是花拳绣腿的拙劣表演而已。软件业是武林的一个翻版，也有大量的模式、套路、规范等外功，但“外功修行，内功修神”。。。 　　这篇文章就是我工作和生活遵从的内功心法。">
-<meta name="keywords" content="Thought">
+<meta name="description" content="消息队列综述​    消息队列（Message queue）是一种进程间通信或同一进程的不同线程间的通信方式，软件的队列用来处理一系列的输入，通常是来自用户。消息队列提供了异步的通信协议，每一个队列中的纪录包含详细说明的数据，包含发生的时间，以及特定的输入参数，也就是说：消息的发送者和接收者不需要同时与消息队列交互。消息会保存在队列中，直到接收者取回它。">
+<meta name="keywords" content="MQ">
 <meta property="og:type" content="article">
-<meta property="og:title" content="How To Solve">
-<meta property="og:url" content="https://cookcode.science/2017/06/01/how-to-solve-it/index.html">
+<meta property="og:title" content="Message Queue Summary">
+<meta property="og:url" content="https://cookcode.science/2017/08/06/message-queue-summary/index.html">
 <meta property="og:site_name" content="Ryan Cui&#39;s Bolg">
-<meta property="og:description" content="如何求解　　引用一段秦小波对《深入理解Java虚拟机》书评中的一段：　　在武侠的世界里，无论是至刚至强的《易筋经》，还是阴柔无比的《葵花宝典》，都离不开内功修炼。没有内功心法，这些武术都只是花拳绣腿的拙劣表演而已。软件业是武林的一个翻版，也有大量的模式、套路、规范等外功，但“外功修行，内功修神”。。。 　　这篇文章就是我工作和生活遵从的内功心法。">
-<meta property="og:image" content="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png">
-<meta property="og:updated_time" content="2017-06-11T15:22:53.432Z">
+<meta property="og:description" content="消息队列综述​    消息队列（Message queue）是一种进程间通信或同一进程的不同线程间的通信方式，软件的队列用来处理一系列的输入，通常是来自用户。消息队列提供了异步的通信协议，每一个队列中的纪录包含详细说明的数据，包含发生的时间，以及特定的输入参数，也就是说：消息的发送者和接收者不需要同时与消息队列交互。消息会保存在队列中，直到接收者取回它。">
+<meta property="og:image" content="https://cookcode.science/images/MQ%20PTP.png">
+<meta property="og:image" content="https://cookcode.science/images/MQ%20Pub%20Sub.png">
+<meta property="og:updated_time" content="2017-08-29T10:32:10.163Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="How To Solve">
-<meta name="twitter:description" content="如何求解　　引用一段秦小波对《深入理解Java虚拟机》书评中的一段：　　在武侠的世界里，无论是至刚至强的《易筋经》，还是阴柔无比的《葵花宝典》，都离不开内功修炼。没有内功心法，这些武术都只是花拳绣腿的拙劣表演而已。软件业是武林的一个翻版，也有大量的模式、套路、规范等外功，但“外功修行，内功修神”。。。 　　这篇文章就是我工作和生活遵从的内功心法。">
-<meta name="twitter:image" content="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png">
+<meta name="twitter:title" content="Message Queue Summary">
+<meta name="twitter:description" content="消息队列综述​    消息队列（Message queue）是一种进程间通信或同一进程的不同线程间的通信方式，软件的队列用来处理一系列的输入，通常是来自用户。消息队列提供了异步的通信协议，每一个队列中的纪录包含详细说明的数据，包含发生的时间，以及特定的输入参数，也就是说：消息的发送者和接收者不需要同时与消息队列交互。消息会保存在队列中，直到接收者取回它。">
+<meta name="twitter:image" content="https://cookcode.science/images/MQ%20PTP.png">
 
 
 
@@ -130,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="https://cookcode.science/2017/06/01/how-to-solve-it/"/>
+  <link rel="canonical" href="https://cookcode.science/2017/08/06/message-queue-summary/"/>
 
 
 
 
 
-  <title>How To Solve | Ryan Cui's Bolg</title>
+  <title>Message Queue Summary | Ryan Cui's Bolg</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -339,7 +340,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://cookcode.science/2017/06/01/how-to-solve-it/">
+    <link itemprop="mainEntityOfPage" href="https://cookcode.science/2017/08/06/message-queue-summary/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ryan Cui">
@@ -356,7 +357,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">How To Solve</h1>
+          <h1 class="post-title" itemprop="name headline">Message Queue Summary</h1>
         
 
         <div class="post-meta">
@@ -368,8 +369,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-01T00:00:00+08:00">
-                2017-06-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-06T00:00:00+08:00">
+                2017-08-06
               </time>
             
 
@@ -391,8 +392,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Thought/" itemprop="url" rel="index">
-                    <span itemprop="name">Thought</span>
+                  <a href="/categories/MQ/" itemprop="url" rel="index">
+                    <span itemprop="name">MQ</span>
                   </a>
                 </span>
 
@@ -410,8 +411,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/06/01/how-to-solve-it/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/06/01/how-to-solve-it/" itemprop="commentsCount"></span>
+                <a href="/2017/08/06/message-queue-summary/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/08/06/message-queue-summary/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -442,21 +443,263 @@
       
 
       
-        <h2 id="如何求解"><a href="#如何求解" class="headerlink" title="如何求解"></a>如何求解</h2><p>　　引用一段秦小波对《深入理解Java虚拟机》书评中的一段：<br><blockquote><p>　　在武侠的世界里，无论是至刚至强的《易筋经》，还是阴柔无比的《葵花宝典》，都离不开内功修炼。没有内功心法，这些武术都只是花拳绣腿的拙劣表演而已。软件业是武林的一个翻版，也有大量的模式、套路、规范等外功，但“外功修行，内功修神”。。。</p>
-</blockquote><br>　　这篇文章就是我工作和生活遵从的内功心法。<br><a id="more"></a><br>　　不论是我们在生活中遇到了困难，还是在工作上遇到了新的问题，我们都要去找到解决困难、问题最好的办法，找到一个最优解。在求解时，清晰地求解过程至关重要。</p>
-<h4 id="1-必须理解问题"><a href="#1-必须理解问题" class="headerlink" title="1. 必须理解问题"></a>1. <strong>必须理解问题</strong></h4><p>　　未知量是什么？已知数据是什么？条件是什么？条件有可能满足吗？条件是否足以确定未知量？条件是否充分？是否多余？是否矛盾？<br>　　画一张图，列出已知的条件与待解决的问题。</p>
-<h4 id="2-找出已知与未知的联系"><a href="#2-找出已知与未知的联系" class="headerlink" title="2. 找出已知与未知的联系"></a>2. <strong>找出已知与未知的联系</strong></h4><p>　　能够重新重新叙述这个问题吗？还能以不同的方式叙述他吗？</p>
-<p>　　回到定义上去。</p>
-<p>　　如果你不能理解整个问题，先尝试去理解某些相关的问题。能否想到一些更普遍化的问题，一个类似的问题？能解决这个问题的一部分吗？能从已知条件中得到一些有用的东西吗？能想到适合的条件来确定未知量吗？你能改变未知量或已知条件，从而使新的未知量和新的已知数据彼此更接近吗？你用到所有的已知数据吗？你用到全部的条件了吗？你把问题中的所有关键概念都考虑到了吗？</p>
-<p>　　如果找不到直接的联系，也许不得不考虑辅助条件。</p>
-<p>　　最终你应该得到一个解决方案。</p>
-<h4 id="3-执行你的方案"><a href="#3-执行你的方案" class="headerlink" title="3. 执行你的方案"></a>3. <strong>执行你的方案</strong></h4><p>　　执行你的解决方案，检查每一个步骤。</p>
-<p>　　你能清楚地看出这个步骤是正确的吗？</p>
-<p>　　你能否证明它是正确的？</p>
-<h4 id="4-检查以及得到的答案"><a href="#4-检查以及得到的答案" class="headerlink" title="4. 检查以及得到的答案"></a>4. <strong>检查以及得到的答案</strong></h4><p>　　你能检验这个结果吗？</p>
-<p>　　你能检验这个论证吗？</p>
-<p>　　你能在不同的问题上利用这个结果或者方法吗？</p>
-<p><a rel="external" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"></a><br>本作品采用<a rel="external" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可。</p>
+        <h3 id="消息队列综述"><a href="#消息队列综述" class="headerlink" title="消息队列综述"></a>消息队列综述</h3><p>​    <strong>消息队列</strong>（Message queue）是一种<em>进程间通信</em>或<em>同一进程的不同线程间</em>的通信方式，软件的队列用来处理一系列的输入，通常是来自用户。消息队列提供了异步的通信协议，每一个队列中的纪录包含详细说明的数据，包含发生的时间，以及特定的输入参数，也就是说：消息的发送者和接收者不需要同时与消息队列交互。消息会保存在队列中，直到接收者取回它。<br>　　<br><a id="more"></a></p>
+<h2 id="1-MQ中间件的基本概念"><a href="#1-MQ中间件的基本概念" class="headerlink" title="1. MQ中间件的基本概念"></a>1. MQ中间件的基本概念</h2><p>​    消息队列中间件是分布式系统中重要的组件，主要解决应用耦合、异步消息、流量削锋等问题。实现高性能、高可用、可伸缩和最终一致性架构。是大型分布式系统不可缺少的中间件。</p>
+<h3 id="1-1-MQ的组成"><a href="#1-1-MQ的组成" class="headerlink" title="1.1 MQ的组成"></a>1.1 MQ的组成</h3><ol>
+<li><p><strong>Broker：</strong></p>
+<p>队列管理器是为应用程序提供消息传递服务的程序。使用消息队列的应用程序可以将消息放置到队列并可从队列中获取消息。队列管理器确保消息可以发送至正确的队列。</p>
+</li>
+<li><p><strong>Producer:</strong></p>
+<p>消息生产者，业务的发起方，负责生产消息传输给Broker。</p>
+</li>
+<li><p><strong>Consumer:</strong></p>
+<p>消息消费者，业务的处理方，负责从Broker获取消息并进行业务逻辑处理。</p>
+</li>
+<li><p><strong>Topic：</strong></p>
+<p>主题，发布订阅模式下的消息统一汇集地，不同生产者向topic发送消息，由MQ服务器分发到不同的订阅者，实现消息的广播。</p>
+</li>
+<li><p><strong>Queue：</strong></p>
+<p>队列，PTP(Point to Point)模式下，特定生产者向特定queue发送消息，消费者订阅特定的queue完成指定消息的接收。</p>
+</li>
+<li><p><strong>Message：</strong></p>
+<p>在MQ中，我们把应用程序交由MQ传输的数据定义为消息，我们可以定义消息的内容并对消息进行广义的理解，比如：用户的各种类型的数据文件，某个应用向其它应用发出的处理请求等都可以作为消息。</p>
+</li>
+</ol>
+<h3 id="1-2-MQ的模型"><a href="#1-2-MQ的模型" class="headerlink" title="1.2 MQ的模型"></a>1.2 MQ的模型</h3><ol>
+<li><p><strong>PTP点对点:使用queue作为通信载体</strong></p>
+<p><img src="/images/MQ PTP.png" alt="MQ PTP"></p>
+</li>
+<li><p><strong>Pub/Sub发布订阅（广播）：使用topic作为通信载体</strong></p>
+<p><img src="/images/MQ Pub Sub.png" alt="MQ Pub Sub"></p>
+</li>
+</ol>
+<h3 id="1-3-MQ常用协议"><a href="#1-3-MQ常用协议" class="headerlink" title="1.3 MQ常用协议"></a>1.3 MQ常用协议</h3><ul>
+<li><p><strong>AMQP协议</strong></p>
+<p>AMQP（Advanced Message Queuing Protocol），一个提供统一消息服务的应用层标准高级消息队列协议，是应用层协议的一个开放标准，为面向消息的中间件设计。基于此协议的客户端与消息中间件可传递消息，并不受客户端/中间件不同产品、不同开发语言等条件的限制。</p>
+<p>优点：可靠、通用</p>
+</li>
+<li><p><strong>MQTT协议</strong></p>
+<p>MQTT（Message Queuing Telemetry Transport）是一个客户端服务端架构的发布/订阅模式的消息传输协议。它的设计思想是轻巧、开放、简单、规范，易于实现。这些特点使得它对很多场景来说都是很好的选择，特别是对于受限的环境如机器与机器的通信（M2M）以及物联网环境（IoT）。</p>
+<p>优点：格式简洁、开销小、发布/订阅消息模式，提供一对多的消息发布、</p>
+</li>
+<li><p><strong>STOMP协议</strong></p>
+<p>STOMP（Streaming Text Orientated Message Protocol）是流文本定向消息协议，是一种为MOM(Message Oriented Middleware，面向消息的中间件)设计的简单文本协议。STOMP提供一个可互操作的连接格式，允许客户端与任意STOMP消息代理（Broker）进行交互。</p>
+<p>优点：命令模式（非topic\queue模式）</p>
+</li>
+<li><p><strong>XMPP协议</strong></p>
+<p>XMPP（Extensible Messaging and Presence Protocol，可扩展消息处理现场协议）是基于可扩展标记语言（XML）的协议，多用于即时消息（IM）以及在线现场探测。适用于服务器之间的准即时操作。核心是基于XML流传输，这个协议可能最终允许因特网用户向因特网上的其他任何人发送即时消息，即使其操作系统和浏览器不同。</p>
+<p>优点：通用公开、兼容性强、可扩展、安全性高，但XML编码格式占用带宽大</p>
+</li>
+<li><p><strong>其他基于TCP/IP自定义的协议</strong></p>
+<p>有些特殊框架（如：Redis、Kafka、zeroMQ等）根据自身需要未严格遵循MQ规范，而是基于TCP\IP自行封装了一套协议，通过socket接口进行传输，实现了MQ的功能。</p>
+</li>
+</ul>
+<h2 id="2-MQ的使用场景"><a href="#2-MQ的使用场景" class="headerlink" title="2. MQ的使用场景"></a>2. MQ的使用场景</h2><ul>
+<li><p><strong>异步通信</strong></p>
+<p>有些业务不想也不需要立即处理消息。消息队列提供了异步处理机制，允许用户把一个消息放入队列，但并不立即处理它。想向队列中放入多少消息就放多少，然后在需要的时候再去处理它们。</p>
+</li>
+<li><p><strong>解耦</strong></p>
+<p>降低工程间的强依赖程度，针对异构系统进行适配。在项目启动之初来预测将来项目会碰到什么需求，是极其困难的。通过消息系统在处理过程中间插入了一个隐含的、基于数据的接口层，两边的处理过程都要实现这一接口，当应用发生变化时，可以独立的扩展或修改两边的处理过程，只要确保它们遵守同样的接口约束。</p>
+</li>
+<li><p><strong>冗余</strong></p>
+<p>有些情况下，处理数据的过程会失败。除非数据被持久化，否则将造成丢失。消息队列把数据进行持久化直到它们已经被完全处理，通过这一方式规避了数据丢失风险。许多消息队列所采用的”插入-获取-删除”范式中，在把一个消息从队列中删除之前，需要你的处理系统明确的指出该消息已经被处理完毕，从而确保你的数据被安全的保存直到你使用完毕。</p>
+</li>
+<li><p><strong>扩展性</strong></p>
+<p>因为消息队列解耦了你的处理过程，所以增大消息入队和处理的频率是很容易的，只要另外增加处理过程即可。不需要改变代码、不需要调节参数。便于分布式扩容。</p>
+</li>
+<li><p><strong>过载保护</strong></p>
+<p>在访问量剧增的情况下，应用仍然需要继续发挥作用，但是这样的突发流量无法提取预知；如果以为了能处理这类瞬间峰值访问为标准来投入资源随时待命无疑是巨大的浪费。使用消息队列能够使关键组件顶住突发的访问压力，而不会因为突发的超负荷的请求而完全崩溃。</p>
+</li>
+<li><p><strong>可恢复性</strong></p>
+<p>系统的一部分组件失效时，不会影响到整个系统。消息队列降低了进程间的耦合度，所以即使一个处理消息的进程挂掉，加入队列中的消息仍然可以在系统恢复后被处理。</p>
+</li>
+<li><p><strong>顺序保证</strong></p>
+<p>在大多使用场景下，数据处理的顺序都很重要。大部分消息队列本来就是排序的，并且能保证数据会按照特定的顺序来处理。</p>
+</li>
+</ul>
+<ul>
+<li><p><strong>缓冲</strong></p>
+<p>在任何重要的系统中，都会有需要不同的处理时间的元素。消息队列通过一个缓冲层来帮助任务最高效率的执行，该缓冲有助于控制和优化数据流经过系统的速度。以调节系统响应时间。</p>
+</li>
+<li><p><strong>数据流处理</strong></p>
+<p>分布式系统产生的海量数据流，如：业务日志、监控数据、用户行为等，针对这些数据流进行实时或批量采集汇总，然后进行大数据分析是当前互联网的必备技术，通过消息队列完成此类数据收集是最好的选择。</p>
+</li>
+</ul>
+<h2 id="3-MQ选型"><a href="#3-MQ选型" class="headerlink" title="3.MQ选型"></a>3.MQ选型</h2><h3 id="3-1-RabbitMQ"><a href="#3-1-RabbitMQ" class="headerlink" title="3.1 RabbitMQ"></a>3.1 RabbitMQ</h3><p>​    使用Erlang编写的一个开源的消息队列，本身支持很多的协议：AMQP，XMPP, SMTP, STOMP。也正是如此，使的它变的非常重量级，更适合于企业级的开发。同时实现了Broker架构，核心思想是生产者不会将消息直接发送给队列，消息在发送给客户端时先在中心队列排队。对路由(Routing)，负载均衡(Load balance)、数据持久化都有很好的支持。多用于进行企业级的ESB整合。</p>
+<h3 id="3-2-ActiveMQ"><a href="#3-2-ActiveMQ" class="headerlink" title="3.2 ActiveMQ"></a>3.2 ActiveMQ</h3><p>​    Apache下的一个子项目。使用Java完全支持JMS1.1和J2EE 1.4规范的 JMS Provider实现，少量代码就可以高效地实现高级应用场景。可插拔的传输协议支持，比如：in-VM, TCP, SSL, NIO, UDP, multicast, JGroups and JXTA transports。</p>
+<h3 id="3-3-ZeroMQ"><a href="#3-3-ZeroMQ" class="headerlink" title="3.3 ZeroMQ"></a>3.3 ZeroMQ</h3><p>​    又称ØMQ、0MQ、ZMQ，号称最快的消息队列系统，专门为高吞吐量/低延迟的场景开发，在金融界的应用中经常使用，偏重于实时数据通信场景。ZMQ能够实现RabbitMQ不擅长的高级/复杂的队列，但是开发人员需要自己组合多种技术框架，开发成本高。因此ZeroMQ具有一个独特的非中间件的模式，更像一个socket library，你不需要安装和运行一个消息服务器或中间件，因为你的应用程序本身就是使用ZeroMQ API完成逻辑服务的角色。但是ZeroMQ仅提供非持久性的队列，如果宕机，数据将会丢失。如：Twitter的Storm中使用ZeroMQ作为数据流的传输。</p>
+<p>​    ZeroMQ套接字是与传输层无关的：ZeroMQ套接字对所有传输层协议定义了统一的API接口。默认支持 进程内(inproc)，进程间(IPC) ，多播 ，TCP协议，在不同的协议之间切换只要简单的改变连接字符串的前缀。可以在任何时候以最小的代价从进程间的本地通信切换到分布式下的TCP通信。ZeroMQ在背后处理连接建立，断开和重连逻辑。</p>
+<p><strong>特性：</strong></p>
+<ul>
+<li><p><strong>无锁的队列模型</strong></p>
+<p>对于跨线程间的交互（用户端和session）之间的数据交换通道pipe，采用无锁的队列算法CAS；在pipe的两端注册有异步事件，在读或者写消息到pipe的时，会自动触发读写事件。</p>
+</li>
+<li><p><strong>批量处理的算法</strong></p>
+<p>对于批量的消息，进行了适应性的优化，可以批量的接收和发送消息。</p>
+</li>
+<li><p><strong>多核下的线程绑定，无须CPU切换</strong></p>
+<p>区别于传统的多线程并发模式，信号量或者临界区， zeroMQ充分利用多核的优势，每个核绑定运行一个工作者线程，避免多线程之间的CPU切换开销。</p>
+</li>
+</ul>
+<p>​    RabbitMQ、ZeroMQ、ActiveMQ均支持常用的多种语言客户端 C++、Java、.Net,、Python、 PHP、 Ruby等。</p>
+<h3 id="3-4-RocketMQ"><a href="#3-4-RocketMQ" class="headerlink" title="3.4 RocketMQ"></a>3.4 RocketMQ</h3><p>​    阿里系下开源的一款分布式、队列模型的消息中间件，原名Metaq，3.0 版本名称改为RocketMQ，是阿里参照Kafka设计思想使用Java实现的一套MQ。同时将阿里系内部多款MQ产品（Notify、Metaq）进行整合，只维护核心功能，去除了所有其他运行时依赖，保证核心功能最简化，在此基础上配合阿里上述其他开源产品实现不同场景下MQ的架构，目前主要多用于订单交易系统。</p>
+<p>具有以下特点：</p>
+<ul>
+<li>能够保证严格的消息顺序</li>
+<li>提供针对消息的过滤功能</li>
+<li>提供丰富的消息拉取模式</li>
+<li>高效的订阅者水平扩展能力</li>
+<li>实时的消息订阅机制</li>
+<li>亿级消息堆积能力</li>
+</ul>
+<h3 id="3-5-Kafka"><a href="#3-5-Kafka" class="headerlink" title="3.5 Kafka"></a>3.5 Kafka</h3><p>​    Apache下的一个子项目，使用Scala实现的一个高性能分布式Publish/Subscribe消息队列系统，具有以下特性：</p>
+<ul>
+<li>快速持久化：通过磁盘顺序读写与零拷贝机制，可以在O(1)的系统开销下进行消息持久化；</li>
+<li>高吞吐：在一台普通的服务器上既可以达到10W/s的吞吐速率；</li>
+<li>高堆积：支持topic下消费者较长时间离线，消息堆积量大；</li>
+<li>完全的分布式系统：Broker、Producer、Consumer都原生自动支持分布式，依赖zookeeper自动实现复杂均衡；</li>
+<li>支持Hadoop数据并行加载：对于像Hadoop的一样的日志数据和离线分析系统，但又要求实时处理的限制，这是一个可行的解决方案。</li>
+</ul>
+<h3 id="3-6-Redis"><a href="#3-6-Redis" class="headerlink" title="3.6 Redis"></a>3.6 Redis</h3><p>​    使用C语言开发的一个Key-Value的NoSQL数据库，开发维护很活跃，虽然它是一个Key-Value数据库存储系统，但它本身支持MQ功能，所以完全可以当做一个轻量级的队列服务来使用。</p>
+<p>​    对于RabbitMQ和Redis的入队和出队操作，各执行100万次，每10万次记录一次执行时间。测试数据分为128Bytes、512Bytes、1K和10K四个不同大小的数据。实验表明：入队时，当数据比较小时Redis的性能要高于RabbitMQ，而如果数据大小超过了10K，Redis则慢的无法忍受；出队时，无论数据大小，Redis都表现出非常好的性能，而RabbitMQ的出队性能则远低于Redis。</p>
+<h3 id="3-7-MQ对比"><a href="#3-7-MQ对比" class="headerlink" title="3.7 MQ对比"></a>3.7 MQ对比</h3><h3 id="3-7-1-使用对比"><a href="#3-7-1-使用对比" class="headerlink" title="3.7.1 使用对比"></a>3.7.1 使用对比</h3><table>
+<thead>
+<tr>
+<th><strong>MQ</strong></th>
+<th><strong>语言</strong></th>
+<th><strong>支持协议</strong></th>
+<th><strong>持久化策略</strong></th>
+<th><strong>消息确认机制</strong></th>
+<th><strong>批处理</strong></th>
+<th><strong>消息处理模式（push-pull）</strong></th>
+<th><strong>消息顺序性</strong></th>
+<th><strong>支持事务</strong></th>
+<th><strong>集群策略</strong></th>
+<th><strong>容灾</strong></th>
+<th><strong>负载均衡</strong></th>
+<th><strong>管理界面</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RabbitMQ</td>
+<td>Erlang</td>
+<td>AMQP STOMP (STOMP 1.0, STOMP 1.1 and STOMP 1.2)MQTTHTTP(有三种方式)</td>
+<td>本地磁盘文件</td>
+<td>有消息确认机制</td>
+<td>支持批量发送消息</td>
+<td>push</td>
+<td>单个消费者有序</td>
+<td>支持</td>
+<td>主从模式支持自动选主</td>
+<td>主从、镜像队列</td>
+<td>Rabbitmq-cluster或LVS或HAproxy</td>
+<td>rabbitmqadmin</td>
+</tr>
+<tr>
+<td>ActiveMQ</td>
+<td>Java</td>
+<td>AMQPMQTTOpenWireSTOMP</td>
+<td>AMQ(磁盘文件)、KahaDB(本地数据库)、JDBC、LevelDB(本地数据库)</td>
+<td>AUTO_ACKNOWLEDGE = 1 自动确认CLIENT_ACKNOWLEDGE = 2 客户端手动确认 DUPS_OK_ACKNOWLEDGE = 3 自动批量确认SESSION_TRANSACTED = 0 事务提交并确认自定义的ACK_MODE:INDIVIDUAL_ACKNOWLEDGE = 4 单条消息确认</td>
+<td>支持批量发送消息</td>
+<td>同时支持Push-pull</td>
+<td>单个消费者有序</td>
+<td>支持</td>
+<td>1、消费者集群2、Broker集群(共享队列)3、主从模式（共享DB、KahaDB复制、共享文件系统）</td>
+<td>共享存储ZooKeeper协调</td>
+<td>Broker-Cluster(共享队列)</td>
+<td>ActiveMQ Web Console</td>
+</tr>
+<tr>
+<td>ZeroMQ</td>
+<td>C/C++</td>
+<td>zmq_ipc(本地进程间通信)基于Socket的通信协议：TCP、INROC 、IPC 、PGM</td>
+<td>不支持持久化</td>
+<td>无，更像NIO模式下的非阻塞事件模式</td>
+<td>支持</td>
+<td>请求响应模式（同步）发布订阅模式（异步）单向管道模型</td>
+<td>无</td>
+<td>无</td>
+<td>无</td>
+<td>无</td>
+<td>无</td>
+<td></td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>C</td>
+<td>自定义redis协议</td>
+<td>支持磁盘持久化</td>
+<td>无</td>
+<td>支持</td>
+<td>非严格意义push-pull</td>
+<td>有序</td>
+<td>支持</td>
+<td>主从</td>
+<td>主从或codis</td>
+<td>LVS或codis</td>
+<td>Redis-cli或redisLive</td>
+</tr>
+<tr>
+<td>Kafka</td>
+<td>scala</td>
+<td>自定义</td>
+<td>磁盘持久化</td>
+<td>有消息确认机制</td>
+<td>支持</td>
+<td>Pull</td>
+<td>Topic单个partition内有序</td>
+<td>否</td>
+<td>zookeeper分布式多节点</td>
+<td>分区副本</td>
+<td>通过zookeeper调度topic分区</td>
+<td>kafka-run-class.sh</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-7-2-使用场景建议"><a href="#3-7-2-使用场景建议" class="headerlink" title="3.7.2 使用场景建议"></a>3.7.2 使用场景建议</h3><table>
+<thead>
+<tr>
+<th>MQ</th>
+<th>TPS量级(持久化)</th>
+<th>场景</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rabbitmq</td>
+<td>3500-4000msg/s</td>
+<td>非海量高可靠性场景</td>
+<td>协议丰富兼容性强，功能完善，消息格式比较大，速度较慢，消息持久化对性能影响明显</td>
+</tr>
+<tr>
+<td>ZeroMq</td>
+<td>&gt;800000msg/s</td>
+<td>高并发连接场景，如：在线游戏</td>
+<td>偏重于网络开发，开发成本高，高级功能需自行实现，不建议做传统MQ应用</td>
+</tr>
+<tr>
+<td>ActiveMq</td>
+<td>~3600msg/s</td>
+<td>非海量高可靠场景</td>
+<td>相对Rabbitmq较轻量级，性能相近，完整JMS支持、配置较复杂</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>~15000msg/s</td>
+<td>高吞吐低延迟</td>
+<td>轻量级MQ的快速简单实现，容灾与负载等功能需自行完善</td>
+</tr>
+<tr>
+<td>Kafka</td>
+<td>Input ~70000msg/s</td>
+<td>日志等海量数据流</td>
+<td>非典型MQ，更偏重于流式数据批处理</td>
+</tr>
+</tbody>
+</table>
 
       
     </div>
@@ -486,7 +729,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Thought/" rel="tag"># Thought</a>
+            <a href="/tags/MQ/" rel="tag"># MQ</a>
           
         </div>
       
@@ -499,14 +742,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/08/05/Java-History/" rel="next" title="Java History">
+                <i class="fa fa-chevron-left"></i> Java History
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/06/04/case-perfect-number/" rel="prev" title="Case Perfect Number">
-                Case Perfect Number <i class="fa fa-chevron-right"></i>
+              <a href="/2017/08/06/thread-process-coroutine/" rel="prev" title="Process Thread Coroutine">
+                Process Thread Coroutine <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -681,7 +928,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何求解"><span class="nav-number">1.</span> <span class="nav-text">如何求解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-必须理解问题"><span class="nav-number">1.0.1.</span> <span class="nav-text">1. 必须理解问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-找出已知与未知的联系"><span class="nav-number">1.0.2.</span> <span class="nav-text">2. 找出已知与未知的联系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-执行你的方案"><span class="nav-number">1.0.3.</span> <span class="nav-text">3. 执行你的方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-检查以及得到的答案"><span class="nav-number">1.0.4.</span> <span class="nav-text">4. 检查以及得到的答案</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#消息队列综述"><span class="nav-number">1.</span> <span class="nav-text">消息队列综述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MQ中间件的基本概念"><span class="nav-number"></span> <span class="nav-text">1. MQ中间件的基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-MQ的组成"><span class="nav-number">1.</span> <span class="nav-text">1.1 MQ的组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-MQ的模型"><span class="nav-number">2.</span> <span class="nav-text">1.2 MQ的模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-MQ常用协议"><span class="nav-number">3.</span> <span class="nav-text">1.3 MQ常用协议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-MQ的使用场景"><span class="nav-number"></span> <span class="nav-text">2. MQ的使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-MQ选型"><span class="nav-number"></span> <span class="nav-text">3.MQ选型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-RabbitMQ"><span class="nav-number">1.</span> <span class="nav-text">3.1 RabbitMQ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-ActiveMQ"><span class="nav-number">2.</span> <span class="nav-text">3.2 ActiveMQ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-ZeroMQ"><span class="nav-number">3.</span> <span class="nav-text">3.3 ZeroMQ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-RocketMQ"><span class="nav-number">4.</span> <span class="nav-text">3.4 RocketMQ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-Kafka"><span class="nav-number">5.</span> <span class="nav-text">3.5 Kafka</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-Redis"><span class="nav-number">6.</span> <span class="nav-text">3.6 Redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-MQ对比"><span class="nav-number">7.</span> <span class="nav-text">3.7 MQ对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-1-使用对比"><span class="nav-number">8.</span> <span class="nav-text">3.7.1 使用对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-2-使用场景建议"><span class="nav-number">9.</span> <span class="nav-text">3.7.2 使用场景建议</span></a></li></ol></div>
             
 
           </div>
@@ -860,7 +1107,7 @@
 		_hcwp.push({widget:"Bloggerstream", widget_id: 94709, selector:".hc-comment-count", label: "{\%COUNT%\}" });
 
 		
-		_hcwp.push({widget:"Stream", widget_id: 94709, xid: "2017/06/01/how-to-solve-it/"});
+		_hcwp.push({widget:"Stream", widget_id: 94709, xid: "2017/08/06/message-queue-summary/"});
 		
 
 		(function() {
