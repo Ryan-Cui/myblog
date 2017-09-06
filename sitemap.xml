@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://cookcode.science/about/index.html</loc>
+    
+    <lastmod>2017-09-06T14:34:46.938Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://cookcode.science/2017/08/06/message-queue-summary/</loc>
     
     <lastmod>2017-08-29T10:32:10.163Z</lastmod>
@@ -68,13 +75,6 @@
     <loc>https://cookcode.science/2017/06/04/case-perfect-number/</loc>
     
     <lastmod>2017-06-12T12:57:49.239Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://cookcode.science/about/index.html</loc>
-    
-    <lastmod>2017-06-11T15:26:11.631Z</lastmod>
     
   </url>
   
